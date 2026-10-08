@@ -1,3 +1,71 @@
 <resources>
     <string name="app_name">InventarioApp</string>
+    <string name="title_main">Inventario Pro</string>
+    <string name="subtitle_main">Gestión de Control de Stock</string>
+    <string name="btn_ingreso_stock">INGRESO AL STOCK</string>
+    <string name="btn_entrada_productos">ENTRADA DE PRODUCTOS</string>
+    <string name="btn_salida_productos">SALIDA DE PRODUCTOS</string>
+    <string name="btn_ver_stock">VER STOCK GENERAL</string>
+
+    <!-- Entrada de Productos -->
+    <string name="title_entrada">Entrada de Producto</string>
+    <string name="hint_buscar_stock">Buscar producto en stock...</string>
+    <string name="label_codigo">Código</string>
+    <string name="label_usuario">Usuario</string>
+    <string name="label_descripcion_prod">Descripción del Producto</string>
+    <string name="label_cantidad">Cantidad</string>
+    <string name="label_lote">Lote</string>
+    <string name="label_fecha_proceso">Fecha de Proceso</string>
+    <string name="label_resultados_busqueda">Resultados de búsqueda</string>
+    <string name="btn_confirmar_entrada">CONFIRMAR ENTRADA</string>
+    <string name="btn_volver_menu">Volver al Menú</string>
+
+    <!-- Ingreso de Stock -->
+    <string name="title_nuevo_ingreso">Nuevo Ingreso de Stock</string>
+    <string name="hint_codigo_prod">Código del Producto</string>
+    <string name="hint_descripcion">Descripción</string>
+    <string name="hint_fecha_ingreso">Fecha de Ingreso</string>
+    <string name="hint_fecha_vencimiento">Fecha de Vencimiento</string>
+    <string name="hint_orden_compra">N° Orden de Compra</string>
+    <string name="label_ubicacion_principal">Ubicación Principal</string>
+    <string name="label_ubicacion_detallada">Ubicación Detallada</string>
+    <string name="btn_ingresar_producto">INGRESAR PRODUCTO</string>
+    <string name="btn_cancelar_volver">Cancelar y Volver</string>
+
+    <!-- Salida de Productos -->
+    <string name="title_salida">Salida de Productos</string>
+    <string name="label_operacion">N° Operación</string>
+    <string name="label_fecha_salida">Fecha Salida</string>
+    <string name="label_cantidad_retirar">Cantidad a Retirar</string>
+    <string name="hint_buscar_producto">Buscar Producto</string>
+    <string name="btn_excel">Excel</string>
+    <string name="btn_agregar">AGREGAR</string>
+    <string name="btn_eliminar">ELIMINAR</string>
+    <string name="label_productos_seleccionados">Productos Seleccionados</string>
+    <string name="btn_modificar">MODIFICAR</string>
+    <string name="btn_finalizar">FINALIZAR</string>
+
+    <!-- Stock General -->
+    <string name="title_stock_general">Stock General</string>
+    <string name="hint_buscar_codigo_desc">Buscar por código o descripción...</string>
+    <string name="header_codigo">CÓDIGO</string>
+    <string name="header_descripcion">DESCRIPCIÓN</string>
+    <string name="header_lote">LOTE</string>
+    <string name="header_cantidad">CANT.</string>
+    <string name="header_vencimiento">VENCIM.</string>
+    <string name="header_ubicacion">UBICACIÓN</string>
+    <string name="header_ubi_detallada">UBI. DETALL.</string>
+    <string name="btn_exportar_importar">Exportar/Importar</string>
+    <string name="btn_volver">Volver</string>
+
+    <!-- Mostrar Datos -->
+    <string name="title_datos_ingresados">DATOS INGRESADOS</string>
+    <string name="label_codigo_summary">CÓDIGO:</string>
+    <string name="label_descripcion_summary">DESCRIPCIÓN:</string>
+    <string name="label_lote_summary">LOTE:</string>
+    <string name="label_cantidad_summary">CANTIDAD:</string>
+    <string name="label_fecha_ingreso_summary">FECHA INGRESO:</string>
+    <string name="label_fecha_vencimiento_summary">FECHA VENCIMIENTO:</string>
+    <string name="label_orden_compra_summary">ORDEN DE COMPRA:</string>
+    <string name="btn_ok">OK</string>
 </resources>

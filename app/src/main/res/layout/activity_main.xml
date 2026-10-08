@@ -5,22 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@color/background_light">
+    android:background="@drawable/fondo_degradado">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp">
+        android:padding="24dp"
+        tools:context=".MainActivity">
 
         <TextView
             android:id="@+id/tvTitulo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="48dp"
             android:gravity="center"
-            android:text="Inventario Pro"
-            android:textColor="@color/primary"
-            android:textSize="32sp"
+            android:text="@string/title_main"
+            android:textColor="@color/background_light"
+            android:textSize="36sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,9 +31,11 @@
             android:id="@+id/tvSubtitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gestión de Control de Stock"
-            android:textColor="@color/text_hint"
-            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:text="@string/subtitle_main"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTitulo" />
@@ -40,7 +43,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="48dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:padding="16dp"
-                android:text="INGRESO AL STOCK"
+                android:text="@string/btn_ingreso_stock"
                 android:textSize="16sp"
                 app:icon="@android:drawable/ic_menu_add" />
 
@@ -64,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:padding="16dp"
-                android:text="ENTRADA DE PRODUCTOS"
+                android:text="@string/btn_entrada_productos"
                 android:textSize="16sp"
                 app:icon="@android:drawable/ic_input_add" />
 
@@ -75,17 +78,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:padding="16dp"
-                android:text="SALIDA DE PRODUCTOS"
+                android:text="@string/btn_salida_productos"
                 android:textSize="16sp"
                 app:icon="@android:drawable/ic_delete" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonStockGeneral"
-                style="@style/Widget.Material3.Button.FilledButton"
+                style="@style/Widget.Material3.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:text="VER STOCK GENERAL"
+                android:text="@string/btn_ver_stock"
                 android:textSize="16sp"
                 app:icon="@android:drawable/ic_menu_agenda" />
 

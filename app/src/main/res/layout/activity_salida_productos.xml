@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@color/background_light">
+    android:background="@drawable/fondo_degradado">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
@@ -20,8 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="Salida de Productos"
-            android:textColor="@color/primary"
+            android:text="@string/title_salida"
+            android:textColor="@color/background_light"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +35,9 @@
             android:layout_marginTop="24dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/surface"
+            app:cardBackgroundColor="@color/card_background"
+            app:strokeColor="@color/text_secondary"
+            app:strokeWidth="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTituloSalida">
@@ -50,7 +52,7 @@
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="Descripción"
+                    android:hint="@string/hint_descripcion"
                     app:layout_constraintEnd_toStartOf="@+id/tilOperacion"
                     app:layout_constraintHorizontal_weight="2"
                     app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +72,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:hint="N° Operación"
+                    android:hint="@string/label_operacion"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintStart_toEndOf="@+id/tilDescripcion"
@@ -90,7 +92,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:hint="Código"
+                    android:hint="@string/label_codigo"
                     app:layout_constraintEnd_toStartOf="@+id/tilFechaSalida"
                     app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintStart_toStartOf="parent"
@@ -111,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="12dp"
-                    android:hint="Fecha Salida"
+                    android:hint="@string/label_fecha_salida"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintStart_toEndOf="@+id/tilCodigo"
@@ -131,7 +133,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:hint="Lote"
+                    android:hint="@string/label_lote"
                     app:layout_constraintEnd_toStartOf="@+id/tilUsuario"
                     app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintStart_toStartOf="parent"
@@ -152,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="12dp"
-                    android:hint="Usuario"
+                    android:hint="@string/label_usuario"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintStart_toEndOf="@+id/tilLote"
@@ -171,7 +173,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:hint="Cantidad a Retirar"
+                    android:hint="@string/label_cantidad_retirar"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tilLote">
@@ -192,7 +194,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="Buscar Producto"
+            android:hint="@string/hint_buscar_producto"
             app:startIconDrawable="@android:drawable/ic_menu_search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -233,7 +235,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
-                android:text="Excel"
+                android:text="@string/btn_excel"
                 app:icon="@android:drawable/ic_menu_save" />
 
             <com.google.android.material.button.MaterialButton
@@ -242,7 +244,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
                 android:layout_marginEnd="8dp"
-                android:text="AGREGAR" />
+                android:text="@string/btn_agregar" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnEliminar"
@@ -250,8 +252,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="ELIMINAR"
-                android:textColor="@color/error" />
+                android:text="@string/btn_eliminar"
+                android:textColor="@color/error_red" />
         </LinearLayout>
 
         <TextView
@@ -259,7 +261,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Productos Seleccionados"
+            android:text="@string/label_productos_seleccionados"
             android:textColor="@color/primary"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -293,14 +295,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
-                android:text="MODIFICAR" />
+                android:text="@string/btn_modificar" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSalir"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="FINALIZAR" />
+                android:text="@string/btn_finalizar" />
         </LinearLayout>
 
         <View

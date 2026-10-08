@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@color/background_light">
+    android:background="@drawable/fondo_degradado">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,9 +19,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="Entrada de Producto"
-            android:textColor="@color/primary"
-            android:textSize="24sp"
+            android:text="@string/title_entrada"
+            android:textColor="@color/background_light"
+            android:textSize="28sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,20 +34,28 @@
             android:layout_marginTop="24dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/card_background"
+            app:strokeColor="@color/text_secondary"
+            app:strokeWidth="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTituloEntrada">
 
-            <EditText
-                android:id="@+id/searchEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:drawableStart="@android:drawable/ic_menu_search"
-                android:drawablePadding="12dp"
-                android:hint="Buscar producto en stock..."
+                <EditText
+                    android:id="@+id/searchEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:drawableStart="@android:drawable/ic_menu_search"
+                    android:drawablePadding="12dp"
+                    android:drawableTint="@color/primary"
+                    android:hint="@string/hint_buscar_stock"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"
                 android:padding="16dp"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:inputType="text"
+                android:autofillHints="none" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -57,6 +65,9 @@
             android:layout_marginTop="16dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/card_background"
+            app:strokeColor="@color/text_secondary"
+            app:strokeWidth="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardSearch">
@@ -78,12 +89,13 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginEnd="8dp"
-                        android:hint="Código">
+                        android:hint="@string/label_codigo">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etCodigo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,12 +104,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="Usuario">
+                        android:hint="@string/label_usuario">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etUsuario"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
@@ -107,12 +120,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:hint="Descripción del Producto">
+                    android:hint="@string/label_descripcion_prod">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etDescripcion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -128,12 +142,13 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginEnd="8dp"
-                        android:hint="Cantidad">
+                        android:hint="@string/label_cantidad">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etCantidad"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -142,12 +157,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="Lote">
+                        android:hint="@string/label_lote">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etLote"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
@@ -157,12 +173,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:hint="Fecha de Proceso">
+                    android:hint="@string/label_fecha_proceso">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etFechaIngreso"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
                         android:focusable="false"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -174,9 +191,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Resultados de búsqueda"
+            android:text="@string/label_resultados_busqueda"
             android:textStyle="bold"
-            android:textColor="@color/primary"
+            android:textColor="@color/text_secondary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardForm" />
 
@@ -197,7 +214,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:padding="16dp"
-            android:text="CONFIRMAR ENTRADA"
+            android:text="@string/btn_confirmar_entrada"
+            android:textSize="16sp"
             app:cornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -209,7 +227,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Volver al Menú"
+            android:text="@string/btn_volver_menu"
             android:textColor="@color/text_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

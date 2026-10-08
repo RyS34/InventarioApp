@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light"
+    android:background="@drawable/fondo_degradado"
     android:padding="16dp">
 
     <TextView
@@ -14,8 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="Stock General"
-        android:textColor="@color/primary"
+        android:text="@string/title_stock_general"
+        android:textColor="@color/background_light"
         android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,6 +29,9 @@
         android:layout_marginTop="16dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="2dp"
+        app:cardBackgroundColor="@color/card_background"
+        app:strokeColor="@color/text_secondary"
+        app:strokeWidth="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitulo">
@@ -40,7 +43,10 @@
             android:background="@android:color/transparent"
             android:drawableStart="@android:drawable/ic_menu_search"
             android:drawablePadding="12dp"
-            android:hint="Buscar por código o descripción..."
+            android:drawableTint="@color/primary"
+            android:hint="@string/hint_buscar_codigo_desc"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_hint"
             android:padding="16dp"
             android:textSize="16sp" />
     </com.google.android.material.card.MaterialCardView>
@@ -53,6 +59,9 @@
         android:layout_marginBottom="16dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="1dp"
+        app:cardBackgroundColor="@color/card_background"
+        app:strokeColor="@color/text_secondary"
+        app:strokeWidth="1dp"
         app:layout_constraintBottom_toTopOf="@+id/llButtons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +89,7 @@
                     <TextView
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="CÓDIGO"
+                        android:text="@string/header_codigo"
                         android:textColor="@android:color/white"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -88,7 +97,7 @@
                     <TextView
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
-                        android:text="DESCRIPCIÓN"
+                        android:text="@string/header_descripcion"
                         android:textColor="@android:color/white"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -96,7 +105,7 @@
                     <TextView
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="LOTE"
+                        android:text="@string/header_lote"
                         android:textColor="@android:color/white"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -104,7 +113,7 @@
                     <TextView
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:text="CANT."
+                        android:text="@string/header_cantidad"
                         android:textColor="@android:color/white"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -112,7 +121,7 @@
                     <TextView
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="VENCIM."
+                        android:text="@string/header_vencimiento"
                         android:textColor="@android:color/white"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -120,7 +129,7 @@
                     <TextView
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="UBICACIÓN"
+                        android:text="@string/header_ubicacion"
                         android:textColor="@android:color/white"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -128,7 +137,7 @@
                     <TextView
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
-                        android:text="UBI. DETALL."
+                        android:text="@string/header_ubi_detallada"
                         android:textColor="@android:color/white"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -162,7 +171,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:text="Exportar/Importar"
+            android:text="@string/btn_exportar_importar"
             app:icon="@android:drawable/ic_menu_save" />
 
         <com.google.android.material.button.MaterialButton
@@ -171,7 +180,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.6"
-            android:text="Volver"
+            android:text="@string/btn_volver"
             android:textColor="@color/text_hint" />
 
     </LinearLayout>

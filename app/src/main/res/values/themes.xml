@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Tema Base Moderno -->
-    <style name="Theme.InventarioApp" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.InventarioApp" parent="Theme.Material3.Dark.NoActionBar">
         <!-- Colores Principales -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorPrimaryContainer">@color/light_blue</item>
+        <item name="colorPrimaryContainer">@color/primary_variant</item>
+        <item name="colorOnPrimaryContainer">@color/white</item>
         <item name="colorSecondary">@color/secondary</item>
-        <item name="android:statusBarColor">@color/primary_variant</item>
+        <item name="android:statusBarColor">#0F172A</item>
+        <item name="android:windowBackground">@drawable/fondo_degradado</item>
 
         <!-- Estilo de los campos de texto -->
         <item name="textInputStyle">@style/Widget.Material3.TextInputLayout.OutlinedBox</item>

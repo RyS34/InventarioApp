@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@color/background_light">
+    android:background="@drawable/fondo_degradado">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,9 +18,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="Nuevo Ingreso de Stock"
-            android:textColor="@color/primary"
-            android:textSize="24sp"
+            android:text="@string/title_nuevo_ingreso"
+            android:textColor="@color/background_light"
+            android:textSize="28sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,8 +32,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             app:cardCornerRadius="16dp"
-            app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/surface"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/card_background"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/text_secondary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTitulo">
@@ -49,13 +51,16 @@
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Código del Producto"
-                    app:startIconDrawable="@android:drawable/ic_menu_agenda">
+                    android:hint="@string/hint_codigo_prod"
+                    app:startIconDrawable="@android:drawable/ic_menu_agenda"
+                    app:hintTextColor="@color/primary"
+                    app:startIconTint="@color/primary">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etCodigo3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -65,12 +70,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:hint="Descripción">
+                    android:hint="@string/hint_descripcion"
+                    app:hintTextColor="@color/primary">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etDescripcion3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,12 +94,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginEnd="8dp"
-                        android:hint="Lote">
+                        android:hint="@string/label_lote"
+                        app:hintTextColor="@color/primary">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etLote3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,12 +111,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="Cantidad">
+                        android:hint="@string/label_cantidad"
+                        app:hintTextColor="@color/primary">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etCantidad3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
@@ -118,13 +129,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:hint="Fecha de Ingreso"
-                    app:startIconDrawable="@android:drawable/ic_menu_my_calendar">
+                    android:hint="@string/hint_fecha_ingreso"
+                    app:startIconDrawable="@android:drawable/ic_menu_my_calendar"
+                    app:hintTextColor="@color/primary"
+                    app:startIconTint="@color/primary">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etFechaIngreso"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
                         android:focusable="false"
                         android:clickable="true"
                         android:inputType="date" />
@@ -136,13 +150,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:hint="Fecha de Vencimiento"
-                    app:startIconDrawable="@android:drawable/ic_menu_my_calendar">
+                    android:hint="@string/hint_fecha_vencimiento"
+                    app:startIconDrawable="@android:drawable/ic_menu_my_calendar"
+                    app:hintTextColor="@color/primary"
+                    app:startIconTint="@color/primary">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etFechaVencimiento"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
                         android:focusable="false"
                         android:clickable="true"
                         android:inputType="date" />
@@ -154,12 +171,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:hint="N° Orden de Compra">
+                    android:hint="@string/hint_orden_compra"
+                    app:hintTextColor="@color/primary">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etOrdenCompra"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
                         android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -168,15 +187,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Ubicación Principal"
+                    android:text="@string/label_ubicacion_principal"
                     android:textStyle="bold"
-                    android:textColor="@color/primary" />
+                    android:textColor="@color/text_secondary" />
 
                 <Spinner
                     android:id="@+id/spinnerUbicacion"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="4dp"
+                    android:backgroundTint="@color/text_secondary"
                     android:background="@android:drawable/btn_dropdown" />
 
                 <TextView
@@ -184,15 +204,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Ubicación Detallada"
+                    android:text="@string/label_ubicacion_detallada"
                     android:textStyle="bold"
-                    android:textColor="@color/primary" />
+                    android:textColor="@color/text_secondary" />
 
                 <Spinner
                     android:id="@+id/spinnerUbicacionDetallada"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="4dp"
+                    android:backgroundTint="@color/text_secondary"
                     android:background="@android:drawable/btn_dropdown" />
 
             </LinearLayout>
@@ -204,7 +225,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:padding="16dp"
-            android:text="INGRESAR PRODUCTO"
+            android:text="@string/btn_ingresar_producto"
             android:textSize="16sp"
             app:cornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -217,7 +238,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Cancelar y Volver"
+            android:text="@string/btn_cancelar_volver"
             android:textColor="@color/text_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
