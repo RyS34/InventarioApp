@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tvCodigo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.1"
+        android:textAlignment="textStart"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvDescripcion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvLote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.2"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvCantidad"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvFechaVencimiento"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.85"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvUbicacion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.10"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvUbicacionDetallada"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+</LinearLayout>

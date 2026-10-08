@@ -1,0 +1,22 @@
+<resources>
+
+    <string-array name="Ubicacion">
+        <item>UBICACION</item>
+        <item>PATIO 1</item>
+        <item>PATIO 2</item>
+    </string-array>
+
+    <string-array name="UbicacionDetallada">
+        <item>UBICACION DETALLADA</item>
+        <item>A-1 </item><item>A-2</item><item>A-3</item>
+        <item>B-1</item><item>B-2</item><item>B-3</item>
+        <item>C-1</item><item>C-2</item><item>C-3</item>
+        <item>D-1</item><item>D-2</item><item>D-3</item>
+        <item>E-1</item><item>E-2</item><item>E-3</item>
+        <item>E-F</item><item>PISO</item>
+        <item>F-1</item><item>F-2</item><item>F-3</item>
+        <item>G-1</item><item>G-2</item><item>G-3</item>
+        <item>H-1</item><item>H-2</item><item>H-3</item>
+
+    </string-array>
+</resources>
