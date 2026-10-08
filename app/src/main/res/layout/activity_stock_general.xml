@@ -2,12 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo_degradado"
-    android:padding="16dp">
+    android:background="@drawable/fondo_degradado">
 
+    <!-- CABECERA FIJA -->
     <TextView
         android:id="@+id/tvTitulo"
         android:layout_width="wrap_content"
@@ -15,13 +14,12 @@
         android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="@string/title_stock_general"
-        android:textColor="@color/background_light"
+        android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_max="800dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/btnBack"
@@ -38,160 +36,165 @@
         app:layout_constraintTop_toTopOf="@id/tvTitulo"
         app:tint="@color/white" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilSearch"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="@string/hint_buscar_codigo_desc"
-        app:endIconMode="custom"
-        app:endIconDrawable="@android:drawable/ic_menu_camera"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitulo"
-        app:layout_constraintWidth_max="800dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/searchEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
-
+    <!-- CONTENIDO (Stock General suele ser una tabla grande, mantenemos el card pero ajustado) -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardTable"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="1dp"
-        app:cardBackgroundColor="@color/card_background"
-        app:strokeColor="@color/text_secondary"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@color/white"
         app:strokeWidth="1dp"
-        app:layout_constraintWidth_max="1000dp"
-        app:layout_constraintBottom_toTopOf="@+id/llButtons"
+        app:strokeColor="@color/gray"
+        app:layout_constraintBottom_toTopOf="@+id/llButtonsStock"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilSearch">
+        app:layout_constraintTop_toBottomOf="@+id/tvTitulo">
 
-        <HorizontalScrollView
-            android:id="@+id/hsvStock"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="horizontal|vertical">
+            android:orientation="vertical"
+            android:padding="8dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilSearch"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:hint="@string/hint_buscar_codigo_desc"
+                app:startIconDrawable="@android:drawable/ic_menu_search"
+                app:startIconTint="@color/primary"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/gray"
+                app:hintTextColor="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/searchEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <HorizontalScrollView
+                android:id="@+id/hsvStock"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:scrollbars="horizontal|vertical">
 
-                <!-- Table Header -->
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/primary"
-                    android:orientation="horizontal"
-                    android:padding="12dp">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/header_codigo"
-                        android:textColor="@android:color/white"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/header_descripcion"
-                        android:textColor="@android:color/white"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/header_lote"
-                        android:textColor="@android:color/white"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/header_cantidad"
-                        android:textColor="@android:color/white"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/header_vencimiento"
-                        android:textColor="@android:color/white"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/header_ubicacion"
-                        android:textColor="@android:color/white"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/header_ubi_detallada"
-                        android:textColor="@android:color/white"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewStock"
-                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:paddingBottom="16dp"
-                    tools:listitem="@layout/item_stock" />
-            </LinearLayout>
-        </HorizontalScrollView>
+                    android:orientation="vertical">
+
+                    <!-- Table Header -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/primary"
+                        android:orientation="horizontal"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/header_codigo"
+                            android:textColor="@android:color/white"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/header_descripcion"
+                            android:textColor="@android:color/white"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/header_lote"
+                            android:textColor="@android:color/white"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/header_cantidad"
+                            android:textColor="@android:color/white"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/header_vencimiento"
+                            android:textColor="@android:color/white"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/header_ubicacion"
+                            android:textColor="@android:color/white"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/header_ubi_detallada"
+                            android:textColor="@android:color/white"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewStock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:background="#FFFFFF"
+                        tools:listitem="@layout/item_stock" />
+                </LinearLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <LinearLayout
-        android:id="@+id/llButtons"
-        android:layout_width="0dp"
+        android:id="@+id/llButtonsStock"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:orientation="horizontal"
-        app:layout_constraintWidth_max="800dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonImportar"
-            style="@style/Widget.Material3.Button.TonalButton"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
             android:text="@string/btn_exportar_importar"
+            app:cornerRadius="12dp"
             app:icon="@android:drawable/ic_menu_save" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonSalir"
             style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.6"
             android:text="@string/btn_volver"
-            android:textColor="@color/text_hint" />
+            android:textColor="@color/gray" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
 
     </LinearLayout>
 

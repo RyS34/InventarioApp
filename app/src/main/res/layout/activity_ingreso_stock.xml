@@ -1,276 +1,290 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:background="@drawable/fondo_degradado">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <!-- CABECERA FIJA -->
+    <TextView
+        android:id="@+id/tvTitulo"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="@string/title_nuevo_ingreso"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvTitulo"
-            android:layout_width="wrap_content"
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="51dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Volver"
+        android:elevation="8dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitulo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvTitulo"
+        app:tint="@color/white" />
+
+    <!-- CONTENIDO DESPLAZABLE -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitulo">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:gravity="center"
-            android:text="@string/title_nuevo_ingreso"
-            android:textColor="@color/background_light"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_max="600dp" />
+            android:orientation="vertical"
+            android:padding="20dp">
 
-        <ImageButton
-            android:id="@+id/btnBack"
-            android:layout_width="51dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="8dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Volver"
-            android:elevation="8dp"
-            android:padding="12dp"
-            android:src="@drawable/ic_back"
-            app:layout_constraintBottom_toBottomOf="@id/tvTitulo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tvTitulo"
-            app:tint="@color/white" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardForm"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="@color/card_background"
-            app:strokeWidth="1dp"
-            app:strokeColor="@color/text_secondary"
-            app:layout_constraintWidth_max="600dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTitulo">
-
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardForm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilCodigo"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_codigo_prod"
-                    app:startIconDrawable="@android:drawable/ic_menu_agenda"
-                    app:endIconMode="custom"
-                    app:endIconDrawable="@android:drawable/ic_menu_camera"
-                    app:endIconContentDescription="Escanear código"
-                    app:endIconTint="@color/primary"
-                    app:hintTextColor="@color/primary"
-                    app:startIconTint="@color/primary">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etCodigo3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/text_primary"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilDescripcion"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:hint="@string/hint_descripcion"
-                    app:hintTextColor="@color/primary">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etDescripcion3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/text_primary"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/white"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/gray">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilLote"
+                        android:id="@+id/tilCodigo"
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="8dp"
-                        android:hint="@string/label_lote"
-                        app:hintTextColor="@color/primary">
+                        android:hint="@string/hint_codigo_prod"
+                        app:startIconDrawable="@android:drawable/ic_menu_agenda"
+                        app:endIconMode="custom"
+                        app:endIconDrawable="@android:drawable/ic_menu_camera"
+                        app:endIconTint="@color/primary"
+                        app:hintTextColor="@color/black"
+                        app:placeholderTextColor="@color/black"
+                        app:startIconTint="@color/primary"
+                        app:boxStrokeColor="@color/primary">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etLote3"
+                            android:id="@+id/etCodigo3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/text_primary"
+                            android:inputType="text"
+                            android:textColor="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilDescripcion"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="@string/hint_descripcion"
+                        app:hintTextColor="@color/black"
+                        app:boxStrokeColor="@color/primary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etDescripcion3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilCantidad"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="@string/label_cantidad"
-                        app:hintTextColor="@color/primary">
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilLote"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            android:hint="@string/label_lote"
+                            app:hintTextColor="@color/black"
+                            app:boxStrokeColor="@color/primary">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etLote3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:inputType="text" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilCantidad"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="@string/label_cantidad"
+                            app:hintTextColor="@color/black"
+                            app:boxStrokeColor="@color/primary">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etCantidad3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:inputType="number" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilFechaIngreso"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="@string/hint_fecha_ingreso"
+                        app:startIconDrawable="@android:drawable/ic_menu_my_calendar"
+                        app:hintTextColor="@color/black"
+                        app:startIconTint="@color/primary"
+                        app:boxStrokeColor="@color/primary">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etCantidad3"
+                            android:id="@+id/etFechaIngreso"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/black"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:inputType="date" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilFechaVencimiento"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="@string/hint_fecha_vencimiento"
+                        app:startIconDrawable="@android:drawable/ic_menu_my_calendar"
+                        app:hintTextColor="@color/black"
+                        app:startIconTint="@color/primary"
+                        app:boxStrokeColor="@color/primary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etFechaVencimiento"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:inputType="date" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilOrdenCompra"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="@string/hint_orden_compra"
+                        app:hintTextColor="@color/black"
+                        app:boxStrokeColor="@color/primary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etOrdenCompra"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilUbicacion"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:hint="@string/label_ubicacion_principal"
+                        app:hintTextColor="@color/black"
+                        app:startIconDrawable="@android:drawable/ic_menu_directions"
+                        app:startIconTint="@color/primary"
+                        app:boxStrokeColor="@color/primary">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/spinnerUbicacion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:textColor="@color/black"
+                            android:padding="16dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilUbicacionDetallada"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="@string/label_ubicacion_detallada"
+                        app:hintTextColor="@color/black"
+                        app:startIconDrawable="@android:drawable/ic_menu_mapmode"
+                        app:startIconTint="@color/primary"
+                        app:boxStrokeColor="@color/primary">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/spinnerUbicacionDetallada"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:textColor="@color/black"
+                            android:padding="16dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- BOTONES DENTRO DEL CONTENEDOR (Card) -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonIngresar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:padding="16dp"
+                        android:text="@string/btn_ingresar_producto"
+                        android:textSize="16sp"
+                        app:cornerRadius="12dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonSalir1"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/btn_cancelar_volver"
+                        android:textColor="@color/gray" />
+
                 </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilFechaIngreso"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:hint="@string/hint_fecha_ingreso"
-                    app:startIconDrawable="@android:drawable/ic_menu_my_calendar"
-                    app:hintTextColor="@color/primary"
-                    app:startIconTint="@color/primary">
+            <!-- Espacio extra al final para evitar la barra del sistema -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etFechaIngreso"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/text_primary"
-                        android:focusable="false"
-                        android:clickable="true"
-                        android:inputType="date" />
-                </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+    </ScrollView>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilFechaVencimiento"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:hint="@string/hint_fecha_vencimiento"
-                    app:startIconDrawable="@android:drawable/ic_menu_my_calendar"
-                    app:hintTextColor="@color/primary"
-                    app:startIconTint="@color/primary">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etFechaVencimiento"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/text_primary"
-                        android:focusable="false"
-                        android:clickable="true"
-                        android:inputType="date" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilOrdenCompra"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:hint="@string/hint_orden_compra"
-                    app:hintTextColor="@color/primary">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etOrdenCompra"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/text_primary"
-                        android:inputType="number" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:id="@+id/tvUbicacionLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/label_ubicacion_principal"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_secondary" />
-
-                <Spinner
-                    android:id="@+id/spinnerUbicacion"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="4dp"
-                    android:backgroundTint="@color/text_secondary"
-                    android:background="@android:drawable/btn_dropdown" />
-
-                <TextView
-                    android:id="@+id/tvUbicacionDetalladaLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/label_ubicacion_detallada"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_secondary" />
-
-                <Spinner
-                    android:id="@+id/spinnerUbicacionDetallada"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="4dp"
-                    android:backgroundTint="@color/text_secondary"
-                    android:background="@android:drawable/btn_dropdown" />
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonIngresar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:padding="16dp"
-            android:text="@string/btn_ingresar_producto"
-            android:textSize="16sp"
-            app:cornerRadius="12dp"
-            app:layout_constraintWidth_max="400dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardForm" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonSalir1"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/btn_cancelar_volver"
-            android:textColor="@color/text_hint"
-            app:layout_constraintWidth_max="400dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buttonIngresar" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            app:layout_constraintTop_toBottomOf="@id/buttonSalir1" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

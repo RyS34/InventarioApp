@@ -1,271 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:background="@drawable/fondo_degradado">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
-        android:layout_width="match_parent"
+    <!-- CABECERA FIJA -->
+    <TextView
+        android:id="@+id/tvTitulo2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        tools:context=".activity_mostrarDatos">
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="@string/title_datos_ingresados"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvTitulo2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:gravity="center"
-            android:text="@string/title_datos_ingresados"
-            android:textColor="@color/background_light"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_max="600dp" />
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="51dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/btn_volver"
+        android:elevation="8dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitulo2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvTitulo2"
+        app:tint="@color/white" />
 
-        <ImageButton
-            android:id="@+id/btnBack"
-            android:layout_width="51dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="8dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/btn_volver"
-            android:elevation="8dp"
-            android:padding="12dp"
-            android:src="@drawable/ic_back"
-            app:layout_constraintBottom_toBottomOf="@id/tvTitulo2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tvTitulo2"
-            app:tint="@color/white" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/card_background"
-            app:strokeColor="@color/text_secondary"
-            app:strokeWidth="1dp"
-            app:layout_constraintWidth_max="600dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTitulo2">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/tvCodigoLabel"
-                    style="@style/TextAppearance.Material3.TitleMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_codigo_summary"
-                    android:textColor="@color/primary"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvCodigoValue"
-                    style="@style/TextAppearance.Material3.BodyLarge"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textColor="@color/text_primary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCodigoLabel"
-                    tools:text="123456" />
-
-                <TextView
-                    android:id="@+id/tvDescripcionLabel"
-                    style="@style/TextAppearance.Material3.TitleMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/label_descripcion_summary"
-                    android:textColor="@color/primary"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCodigoValue" />
-
-                <TextView
-                    android:id="@+id/tvDescripcionValue"
-                    style="@style/TextAppearance.Material3.BodyLarge"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textColor="@color/text_primary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvDescripcionLabel"
-                    tools:text="Descripción del producto" />
-
-                <TextView
-                    android:id="@+id/tvLoteLabel"
-                    style="@style/TextAppearance.Material3.TitleMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/label_lote_summary"
-                    android:textColor="@color/primary"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvDescripcionValue" />
-
-                <TextView
-                    android:id="@+id/tvLoteValue"
-                    style="@style/TextAppearance.Material3.BodyLarge"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textColor="@color/text_primary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvLoteLabel"
-                    tools:text="LOT-2023-001" />
-
-                <TextView
-                    android:id="@+id/tvCantidadLabel"
-                    style="@style/TextAppearance.Material3.TitleMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/label_cantidad_summary"
-                    android:textColor="@color/primary"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvLoteValue" />
-
-                <TextView
-                    android:id="@+id/tvCantidadValue"
-                    style="@style/TextAppearance.Material3.BodyLarge"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textColor="@color/text_primary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCantidadLabel"
-                    tools:text="50" />
-
-                <TextView
-                    android:id="@+id/tvFechaIngresoLabel"
-                    style="@style/TextAppearance.Material3.TitleMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/label_fecha_ingreso_summary"
-                    android:textColor="@color/primary"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCantidadValue" />
-
-                <TextView
-                    android:id="@+id/tvFechaIngresoValue"
-                    style="@style/TextAppearance.Material3.BodyLarge"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textColor="@color/text_primary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvFechaIngresoLabel"
-                    tools:text="01/01/2023" />
-
-                <TextView
-                    android:id="@+id/tvFechaVencimientoLabel"
-                    style="@style/TextAppearance.Material3.TitleMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/label_fecha_vencimiento_summary"
-                    android:textColor="@color/primary"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvFechaIngresoValue" />
-
-                <TextView
-                    android:id="@+id/tvFechaVencimientoValue"
-                    style="@style/TextAppearance.Material3.BodyLarge"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textColor="@color/text_primary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvFechaVencimientoLabel"
-                    tools:text="01/01/2024" />
-
-                <TextView
-                    android:id="@+id/tvOrdenCompraLabel"
-                    style="@style/TextAppearance.Material3.TitleMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/label_orden_compra_summary"
-                    android:textColor="@color/primary"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvFechaVencimientoValue" />
-
-                <TextView
-                    android:id="@+id/tvOrdenCompraValue"
-                    style="@style/TextAppearance.Material3.BodyLarge"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textColor="@color/text_primary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvOrdenCompraLabel"
-                    tools:text="OC-998877" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
+    <!-- CONTENIDO DESPLAZABLE -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitulo2">
 
         <LinearLayout
-            android:id="@+id/layoutButtons"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="16dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_max="600dp">
+            android:orientation="vertical"
+            android:padding="20dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonEditar"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="0dp"
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:padding="12dp"
-                android:text="@string/btn_modificar"
-                android:textColor="@color/white"
-                app:strokeColor="@color/white" />
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/white"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/gray">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonOk"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:padding="12dp"
-                android:text="@string/btn_ok" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/tvCodigoLabel"
+                        style="@style/TextAppearance.Material3.TitleMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_codigo_summary"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCodigoValue"
+                        style="@style/TextAppearance.Material3.BodyLarge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/black"
+                        tools:text="123456" />
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="12dp" android:background="#EEEEEE" />
+
+                    <TextView
+                        android:id="@+id/tvDescripcionLabel"
+                        style="@style/TextAppearance.Material3.TitleMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_descripcion_summary"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvDescripcionValue"
+                        style="@style/TextAppearance.Material3.BodyLarge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/black"
+                        tools:text="Descripción del producto" />
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="12dp" android:background="#EEEEEE" />
+
+                    <TextView
+                        android:id="@+id/tvLoteLabel"
+                        style="@style/TextAppearance.Material3.TitleMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_lote_summary"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvLoteValue"
+                        style="@style/TextAppearance.Material3.BodyLarge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/black"
+                        tools:text="LOT-2023-001" />
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="12dp" android:background="#EEEEEE" />
+
+                    <TextView
+                        android:id="@+id/tvCantidadLabel"
+                        style="@style/TextAppearance.Material3.TitleMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_cantidad_summary"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCantidadValue"
+                        style="@style/TextAppearance.Material3.BodyLarge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/black"
+                        tools:text="50" />
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="12dp" android:background="#EEEEEE" />
+
+                    <TextView
+                        android:id="@+id/tvFechaIngresoLabel"
+                        style="@style/TextAppearance.Material3.TitleMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_fecha_ingreso_summary"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvFechaIngresoValue"
+                        style="@style/TextAppearance.Material3.BodyLarge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/black"
+                        tools:text="01/01/2023" />
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="12dp" android:background="#EEEEEE" />
+
+                    <TextView
+                        android:id="@+id/tvFechaVencimientoLabel"
+                        style="@style/TextAppearance.Material3.TitleMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_fecha_vencimiento_summary"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvFechaVencimientoValue"
+                        style="@style/TextAppearance.Material3.BodyLarge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/black"
+                        tools:text="01/01/2024" />
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="12dp" android:background="#EEEEEE" />
+
+                    <TextView
+                        android:id="@+id/tvOrdenCompraLabel"
+                        style="@style/TextAppearance.Material3.TitleMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_orden_compra_summary"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvOrdenCompraValue"
+                        style="@style/TextAppearance.Material3.BodyLarge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/black"
+                        tools:text="OC-998877" />
+
+                    <!-- BOTONES DENTRO DEL CONTENEDOR -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonOk"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:padding="16dp"
+                        android:text="@string/btn_ok"
+                        app:cornerRadius="12dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonEditar"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/btn_modificar"
+                        android:textColor="@color/gray" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
+
         </LinearLayout>
+    </ScrollView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

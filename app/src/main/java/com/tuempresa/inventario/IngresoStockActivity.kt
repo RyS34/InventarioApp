@@ -5,10 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -34,15 +34,21 @@ class IngresoStockActivity : AppCompatActivity() {
     private lateinit var etLote: EditText
     private lateinit var etCantidad: EditText
     private lateinit var etOrdenCompra: EditText
-    private lateinit var spinnerUbicacion: Spinner
-    private lateinit var spinnerUbicacionDetallada: Spinner
+    private lateinit var spinnerUbicacion: AutoCompleteTextView
+    private lateinit var spinnerUbicacionDetallada: AutoCompleteTextView
+    private var tempStockItem: StockItem? = null
 
     private val mostrarDatosLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
-            // Si el usuario presionó OK, limpiamos los campos para un nuevo ingreso
+            // El usuario confirmó los datos en la pantalla de resumen
+            tempStockItem?.let { 
+                guardarStockItem(it)
+                Toast.makeText(this, "Artículo ingresado con éxito.", Toast.LENGTH_SHORT).show()
+            }
             limpiarCampos()
             etCodigo.requestFocus()
         }
+        tempStockItem = null
         // Si el usuario presionó MODIFICAR (RESULT_CANCELED), no hacemos nada
         // Los campos mantienen el texto que tenían para que pueda corregirlos
     }
@@ -93,14 +99,11 @@ class IngresoStockActivity : AppCompatActivity() {
         val ubicaciones = resources.getStringArray(R.array.Ubicacion)
         val ubicacionesDetalladas = resources.getStringArray(R.array.UbicacionDetallada)
 
-        val adaptadorUbicaciones = ArrayAdapter(this, android.R.layout.simple_spinner_item, ubicaciones)
-        val adaptadorUbicacionesDetalladas = ArrayAdapter(this, android.R.layout.simple_spinner_item, ubicacionesDetalladas)
+        val adaptadorUbicaciones = ArrayAdapter(this, R.layout.spinner_item, ubicaciones)
+        val adaptadorUbicacionesDetalladas = ArrayAdapter(this, R.layout.spinner_item, ubicacionesDetalladas)
 
-        adaptadorUbicaciones.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        adaptadorUbicacionesDetalladas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        spinnerUbicacion.adapter = adaptadorUbicaciones
-        spinnerUbicacionDetallada.adapter = adaptadorUbicacionesDetalladas
+        spinnerUbicacion.setAdapter(adaptadorUbicaciones)
+        spinnerUbicacionDetallada.setAdapter(adaptadorUbicacionesDetalladas)
 
         etFechaIngreso.setOnClickListener {
             mostrarDatePicker(etFechaIngreso)
@@ -117,8 +120,8 @@ class IngresoStockActivity : AppCompatActivity() {
                 val lote = etLote.text.toString()
                 val cantidadString = etCantidad.text.toString()
                 val fechaVencimiento = etFechaVencimiento.text.toString()
-                val ubicacion = spinnerUbicacion.selectedItem.toString()
-                val ubicacionDetallada = spinnerUbicacionDetallada.selectedItem.toString()
+                val ubicacion = spinnerUbicacion.text.toString()
+                val ubicacionDetallada = spinnerUbicacionDetallada.text.toString()
                 val fechaIngreso = etFechaIngreso.text.toString()
                 val ordenCompra = etOrdenCompra.text.toString()
 
@@ -129,17 +132,13 @@ class IngresoStockActivity : AppCompatActivity() {
                     codigo = codigo,
                     descripcion = descripcion,
                     lote = lote,
-                    cantidad = cantidad, // Asignar directamente el Int
+                    cantidad = cantidad,
                     fechaIngreso = fechaIngreso,
                     fechaVencimiento = fechaVencimiento,
                     ordenCompra = ordenCompra,
                     ubicacion = ubicacion,
                     ubicacionDetallada = ubicacionDetallada
                 )
-
-                guardarStockItem(stockItem)
-
-                Toast.makeText(this, "Artículo ingresado con éxito.", Toast.LENGTH_SHORT).show()
 
                 // Lanzar la pantalla de resumen esperando el resultado (OK o Modificar)
                 val intent = Intent(this, activity_mostrarDatos::class.java).apply {
@@ -151,6 +150,9 @@ class IngresoStockActivity : AppCompatActivity() {
                     putExtra("fechaVencimiento", fechaVencimiento)
                     putExtra("ordenCompra", ordenCompra)
                 }
+                
+                // Guardamos el objeto temporalmente para usarlo si el usuario presiona OK
+                this.tempStockItem = stockItem
                 mostrarDatosLauncher.launch(intent)
             } else {
                 Toast.makeText(this, "Por favor, complete todos los campos.", Toast.LENGTH_SHORT).show()
@@ -203,8 +205,8 @@ class IngresoStockActivity : AppCompatActivity() {
         etFechaIngreso.text.clear()
         etFechaVencimiento.text.clear()
         etOrdenCompra.text.clear()
-        spinnerUbicacion.setSelection(0)
-        spinnerUbicacionDetallada.setSelection(0)
+        spinnerUbicacion.setText("", false)
+        spinnerUbicacionDetallada.setText("", false)
     }
 
     private fun validarCampos(): Boolean {
@@ -215,8 +217,8 @@ class IngresoStockActivity : AppCompatActivity() {
                 etFechaIngreso.text.isNotEmpty() &&
                 etFechaVencimiento.text.isNotEmpty() &&
                 etOrdenCompra.text.isNotEmpty() &&
-                spinnerUbicacion.selectedItemPosition != 0 &&
-                spinnerUbicacionDetallada.selectedItemPosition != 0
+                spinnerUbicacion.text.isNotEmpty() &&
+                spinnerUbicacionDetallada.text.isNotEmpty()
     }
 
     private fun guardarStockItem(stockItem: StockItem) {

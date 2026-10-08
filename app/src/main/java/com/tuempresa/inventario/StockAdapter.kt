@@ -43,9 +43,23 @@ class StockAdapter(
         holder.tvUbicacionDetallada.text = currentItem.ubicacionDetallada
 
         if (position == selectedPosition) {
-            holder.itemView.setBackgroundColor(Color.LTGRAY)
+            holder.itemView.setBackgroundResource(R.color.primary_variant)
+            holder.tvCodigo.setTextColor(Color.WHITE)
+            holder.tvDescripcion.setTextColor(Color.WHITE)
+            holder.tvLote.setTextColor(Color.WHITE)
+            holder.tvCantidad.setTextColor(Color.WHITE)
+            holder.tvFechaVencimiento.setTextColor(Color.WHITE)
+            holder.tvUbicacion.setTextColor(Color.WHITE)
+            holder.tvUbicacionDetallada.setTextColor(Color.WHITE)
         } else {
             holder.itemView.setBackgroundColor(Color.TRANSPARENT)
+            holder.tvCodigo.setTextColor(holder.itemView.context.getColor(R.color.text_primary))
+            holder.tvDescripcion.setTextColor(holder.itemView.context.getColor(R.color.text_primary))
+            holder.tvLote.setTextColor(holder.itemView.context.getColor(R.color.text_secondary))
+            holder.tvCantidad.setTextColor(holder.itemView.context.getColor(R.color.primary))
+            holder.tvFechaVencimiento.setTextColor(holder.itemView.context.getColor(R.color.text_secondary))
+            holder.tvUbicacion.setTextColor(holder.itemView.context.getColor(R.color.text_secondary))
+            holder.tvUbicacionDetallada.setTextColor(holder.itemView.context.getColor(R.color.text_secondary))
         }
 
         holder.itemView.setOnClickListener {

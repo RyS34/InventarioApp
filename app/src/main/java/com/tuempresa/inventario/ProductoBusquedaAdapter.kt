@@ -1,5 +1,6 @@
 package com.tuempresa.inventario
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -30,10 +31,14 @@ class ProductosBusquedaAdapter(val productos: MutableList<Producto>) : RecyclerV
 
     override fun onBindViewHolder(holder: ProductoViewHolder, position: Int) {
         val producto = productos[position]
-        holder.bind(producto)// Agregar logs para verificar el tamaño de la lista y el contenido del producto
-        // Agregar logs para verificar el tamaño de la lista y el contenido del producto
-        Log.d("ProductosBusquedaAdapter", "onBindViewHolder: Tamaño de la lista: ${productos.size}")
-        Log.d("ProductosBusquedaAdapter", "onBindViewHolder: Producto: ${producto.codigo}, ${producto.descripcion}, ${producto.lote}, ${producto.cantidad}")
+        holder.bind(producto)
+        
+        // Mantener coherencia visual con los demás adaptadores (aunque este no tiene selección por ahora)
+        holder.itemView.setBackgroundColor(Color.TRANSPARENT)
+        holder.tvDescripcion.setTextColor(holder.itemView.context.getColor(R.color.text_primary))
+        holder.tvCodigo.setTextColor(holder.itemView.context.getColor(R.color.text_secondary))
+        holder.tvCantidad.setTextColor(holder.itemView.context.getColor(R.color.primary))
+        holder.tvLote.setTextColor(holder.itemView.context.getColor(R.color.text_hint))
     }
     // Metodo para actualizar la lista de productos
     override fun getItemCount(): Int {

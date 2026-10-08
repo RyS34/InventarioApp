@@ -40,9 +40,18 @@ class EntradaProductosAdapter(
 
         // Cambiar el color de fondo si el elemento está seleccionado
         if (position == selectedPosition) {
-            holder.itemView.setBackgroundColor(Color.LTGRAY) // Cambia el color a gris claro (puedes usar otro color)
+            holder.itemView.setBackgroundResource(R.color.primary_variant)
+            // Ajustar colores de texto para contraste en selección
+            holder.tvDescripcion.setTextColor(Color.WHITE)
+            holder.tvCodigo.setTextColor(Color.WHITE)
+            holder.tvCantidad.setTextColor(Color.WHITE)
+            holder.tvLote.setTextColor(Color.WHITE)
         } else {
-            holder.itemView.setBackgroundColor(Color.TRANSPARENT) // Restaura el color de fondo predeterminado
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT)
+            holder.tvDescripcion.setTextColor(holder.itemView.context.getColor(R.color.text_primary))
+            holder.tvCodigo.setTextColor(holder.itemView.context.getColor(R.color.text_secondary))
+            holder.tvCantidad.setTextColor(holder.itemView.context.getColor(R.color.primary))
+            holder.tvLote.setTextColor(holder.itemView.context.getColor(R.color.text_hint))
         }
 
         holder.itemView.setOnClickListener {

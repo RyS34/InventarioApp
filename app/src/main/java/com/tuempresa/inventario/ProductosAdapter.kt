@@ -1,6 +1,7 @@
 package com.tuempresa.inventario
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,18 +38,26 @@ class ProductosAdapter(private var productosList: MutableList<Producto> = mutabl
 
         // Establecer el color de fondo del elemento seleccionado
         holder.itemView.setOnClickListener {
-            val newPosition = holder.getBindingAdapterPosition()
+            val newPosition = holder.bindingAdapterPosition
             if (newPosition != RecyclerView.NO_POSITION) {
                 selectedPosition = newPosition
-                notifyItemRangeChanged(0, productosList.size)
+                notifyDataSetChanged()
             }
         }
 
-        // Establecer el color de fondo del elemento seleccionado
+        // Establecer el color de fondo y textos del elemento seleccionado
         if (selectedPosition == position) {
-            holder.itemView.setBackgroundResource(android.R.color.darker_gray)
+            holder.itemView.setBackgroundResource(R.color.primary_variant)
+            holder.tvDescripcion.setTextColor(Color.WHITE)
+            holder.tvCodigo.setTextColor(Color.WHITE)
+            holder.tvCantidad.setTextColor(Color.WHITE)
+            holder.tvLote.setTextColor(Color.WHITE)
         } else {
-            holder.itemView.setBackgroundResource(android.R.color.transparent)
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT)
+            holder.tvDescripcion.setTextColor(holder.itemView.context.getColor(R.color.text_primary))
+            holder.tvCodigo.setTextColor(holder.itemView.context.getColor(R.color.text_secondary))
+            holder.tvCantidad.setTextColor(holder.itemView.context.getColor(R.color.primary))
+            holder.tvLote.setTextColor(holder.itemView.context.getColor(R.color.text_hint))
         }
     }
 
