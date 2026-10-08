@@ -15,17 +15,33 @@
 
         <TextView
             android:id="@+id/tvTituloEntrada"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:gravity="center"
             android:text="@string/title_entrada"
             android:textColor="@color/background_light"
-            android:textSize="28sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_max="600dp" />
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="51dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/btn_volver"
+            android:elevation="8dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="@id/tvTituloEntrada"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvTituloEntrada"
+            app:tint="@color/white" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardSearch"
@@ -37,6 +53,7 @@
             app:cardBackgroundColor="@color/card_background"
             app:strokeColor="@color/text_secondary"
             app:strokeWidth="1dp"
+            app:layout_constraintWidth_max="600dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTituloEntrada">
@@ -68,6 +85,7 @@
             app:cardBackgroundColor="@color/card_background"
             app:strokeColor="@color/text_secondary"
             app:strokeWidth="1dp"
+            app:layout_constraintWidth_max="600dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardSearch">
@@ -85,11 +103,16 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilCodigo"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginEnd="8dp"
-                        android:hint="@string/label_codigo">
+                        android:hint="@string/label_codigo"
+                        app:endIconMode="custom"
+                        app:endIconDrawable="@android:drawable/ic_menu_camera"
+                        app:endIconContentDescription="Escanear código"
+                        app:endIconTint="@color/primary">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etCodigo"
@@ -188,12 +211,14 @@
 
         <TextView
             android:id="@+id/tvListaLabel"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/label_resultados_busqueda"
             android:textStyle="bold"
             android:textColor="@color/text_secondary"
+            app:layout_constraintWidth_max="600dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardForm" />
 
@@ -204,6 +229,7 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_card_modern"
             android:elevation="1dp"
+            app:layout_constraintWidth_max="600dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvListaLabel" />
@@ -217,6 +243,7 @@
             android:text="@string/btn_confirmar_entrada"
             android:textSize="16sp"
             app:cornerRadius="12dp"
+            app:layout_constraintWidth_max="400dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rvProductos" />
@@ -229,6 +256,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/btn_volver_menu"
             android:textColor="@color/text_hint"
+            app:layout_constraintWidth_max="400dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btnIngresar" />

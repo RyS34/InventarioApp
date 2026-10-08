@@ -61,4 +61,5 @@ dependencies {
     // Para Kotlin KAPT (Kotlin Annotation Processing Tool)
     kapt("androidx.room:room-compiler:2.6.1") // o la versión más reciente
     implementation ("net.sourceforge.jexcelapi:jxl:2.6.12")
+    implementation(libs.play.code.scanner)
 }

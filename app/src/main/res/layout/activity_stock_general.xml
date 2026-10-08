@@ -10,46 +10,54 @@
 
     <TextView
         android:id="@+id/tvTitulo"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="@string/title_stock_general"
         android:textColor="@color/background_light"
-        android:textSize="26sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_max="800dp" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardSearch"
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="51dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/btn_volver"
+        android:elevation="8dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitulo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvTitulo"
+        app:tint="@color/white" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilSearch"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="2dp"
-        app:cardBackgroundColor="@color/card_background"
-        app:strokeColor="@color/text_secondary"
-        app:strokeWidth="1dp"
+        android:hint="@string/hint_buscar_codigo_desc"
+        app:endIconMode="custom"
+        app:endIconDrawable="@android:drawable/ic_menu_camera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitulo">
+        app:layout_constraintTop_toBottomOf="@+id/tvTitulo"
+        app:layout_constraintWidth_max="800dp">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/searchEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:drawableStart="@android:drawable/ic_menu_search"
-            android:drawablePadding="12dp"
-            android:drawableTint="@color/primary"
-            android:hint="@string/hint_buscar_codigo_desc"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/text_hint"
-            android:padding="16dp"
-            android:textSize="16sp" />
-    </com.google.android.material.card.MaterialCardView>
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardTable"
@@ -62,10 +70,11 @@
         app:cardBackgroundColor="@color/card_background"
         app:strokeColor="@color/text_secondary"
         app:strokeWidth="1dp"
+        app:layout_constraintWidth_max="1000dp"
         app:layout_constraintBottom_toTopOf="@+id/llButtons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardSearch">
+        app:layout_constraintTop_toBottomOf="@+id/tilSearch">
 
         <HorizontalScrollView
             android:id="@+id/hsvStock"
@@ -160,6 +169,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:orientation="horizontal"
+        app:layout_constraintWidth_max="800dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

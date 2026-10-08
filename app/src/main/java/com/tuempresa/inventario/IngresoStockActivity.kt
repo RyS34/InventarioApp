@@ -7,11 +7,17 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.textfield.TextInputLayout
+import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
+import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import com.tuempresa.inventario.model.StockItem
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -31,6 +37,16 @@ class IngresoStockActivity : AppCompatActivity() {
     private lateinit var spinnerUbicacion: Spinner
     private lateinit var spinnerUbicacionDetallada: Spinner
 
+    private val mostrarDatosLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            // Si el usuario presionó OK, limpiamos los campos para un nuevo ingreso
+            limpiarCampos()
+            etCodigo.requestFocus()
+        }
+        // Si el usuario presionó MODIFICAR (RESULT_CANCELED), no hacemos nada
+        // Los campos mantienen el texto que tenían para que pueda corregirlos
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ingreso_stock)
@@ -45,8 +61,34 @@ class IngresoStockActivity : AppCompatActivity() {
         etOrdenCompra = findViewById(R.id.etOrdenCompra)
         spinnerUbicacion = findViewById(R.id.spinnerUbicacion)
         spinnerUbicacionDetallada = findViewById(R.id.spinnerUbicacionDetallada)
+        val tilCodigo = findViewById<TextInputLayout>(R.id.tilCodigo)
         val btnIngresar = findViewById<Button>(R.id.buttonIngresar)
         val btnSalir = findViewById<Button>(R.id.buttonSalir1)
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+
+        btnBack.setOnClickListener {
+            finish()
+        }
+
+        // Configurar el escáner inteligente
+        val options = GmsBarcodeScannerOptions.Builder()
+            .setBarcodeFormats(Barcode.FORMAT_ALL_FORMATS)
+            .enableAutoZoom() // Ayuda con códigos pequeños
+            .build()
+        val scanner = GmsBarcodeScanning.getClient(this, options)
+
+        tilCodigo.setEndIconOnClickListener {
+            scanner.startScan()
+                .addOnSuccessListener { barcode ->
+                    val code = barcode.rawValue
+                    etCodigo.setText(code)
+                    // Después de escanear el código, movemos el foco a descripción
+                    etDescripcion.requestFocus()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Escaneo cancelado o error", Toast.LENGTH_SHORT).show()
+                }
+        }
 
         val ubicaciones = resources.getStringArray(R.array.Ubicacion)
         val ubicacionesDetalladas = resources.getStringArray(R.array.UbicacionDetallada)
@@ -98,7 +140,18 @@ class IngresoStockActivity : AppCompatActivity() {
                 guardarStockItem(stockItem)
 
                 Toast.makeText(this, "Artículo ingresado con éxito.", Toast.LENGTH_SHORT).show()
-                limpiarCampos()
+
+                // Lanzar la pantalla de resumen esperando el resultado (OK o Modificar)
+                val intent = Intent(this, activity_mostrarDatos::class.java).apply {
+                    putExtra("codigo", codigo)
+                    putExtra("descripcion", descripcion)
+                    putExtra("lote", lote)
+                    putExtra("cantidad", cantidad.toString())
+                    putExtra("fechaIngreso", fechaIngreso)
+                    putExtra("fechaVencimiento", fechaVencimiento)
+                    putExtra("ordenCompra", ordenCompra)
+                }
+                mostrarDatosLauncher.launch(intent)
             } else {
                 Toast.makeText(this, "Por favor, complete todos los campos.", Toast.LENGTH_SHORT).show()
             }
@@ -113,7 +166,7 @@ class IngresoStockActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        limpiarCampos()
+        // Eliminado limpiarCampos() para permitir la edición al volver de la pantalla de resumen
     }
 
     private fun mostrarDatePicker(editText: EditText) {

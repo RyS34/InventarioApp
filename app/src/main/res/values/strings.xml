@@ -68,4 +68,5 @@
     <string name="label_fecha_vencimiento_summary">FECHA VENCIMIENTO:</string>
     <string name="label_orden_compra_summary">ORDEN DE COMPRA:</string>
     <string name="btn_ok">OK</string>
+    <string name="version_app">Version 2.0</string>
 </resources>

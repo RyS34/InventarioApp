@@ -2,6 +2,7 @@ package com.tuempresa.inventario
 
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -21,8 +22,14 @@ class activity_mostrarDatos : AppCompatActivity() {
         val tvFechaVencimientoValue = findViewById<TextView>(R.id.tvFechaVencimientoValue)
         val tvOrdenCompraValue = findViewById<TextView>(R.id.tvOrdenCompraValue)
 
-        // Obtener el botón OK
+        // Obtener los botones
         val btnOk = findViewById<Button>(R.id.buttonOk)
+        val btnEditar = findViewById<Button>(R.id.buttonEditar)
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+
+        btnBack.setOnClickListener {
+            finish()
+        }
 
         // Obtener los datos del Intent
         val intent = intent
@@ -45,7 +52,14 @@ class activity_mostrarDatos : AppCompatActivity() {
 
         // Configurar el listener del botón OK
         btnOk.setOnClickListener {
-            finish() // Finalizar la activity_mostrarDatos y volver a IngresoStockActivity
+            setResult(RESULT_OK) // Indicar que todo está correcto
+            finish() 
+        }
+
+        // Configurar el listener del botón Modificar
+        btnEditar.setOnClickListener {
+            setResult(RESULT_CANCELED) // Indicar que se quiere volver a editar
+            finish()
         }
     }
 }

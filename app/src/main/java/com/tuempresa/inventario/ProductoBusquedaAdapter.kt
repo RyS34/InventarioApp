@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ProductosBusquedaAdapter(private var productos: MutableList<Producto>) : RecyclerView.Adapter<ProductosBusquedaAdapter.ProductoViewHolder>() {
+class ProductosBusquedaAdapter(val productos: MutableList<Producto>) : RecyclerView.Adapter<ProductosBusquedaAdapter.ProductoViewHolder>() {
 
     class ProductoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvCodigo: TextView = itemView.findViewById(R.id.tvCodigo)

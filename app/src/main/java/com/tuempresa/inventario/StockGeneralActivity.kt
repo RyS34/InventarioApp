@@ -10,14 +10,20 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
+import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import com.tuempresa.inventario.model.StockItem
 import org.apache.poi.ss.usermodel.WorkbookFactory
 
@@ -29,7 +35,8 @@ class StockGeneralActivity : AppCompatActivity() {
     private lateinit var buttonSalir: Button
     private lateinit var buttonImportar: Button
     private lateinit var openFileLauncher: ActivityResultLauncher<Intent>
-    private lateinit var searchEditText: EditText
+    private lateinit var searchEditText: TextInputEditText
+    private lateinit var tilSearch: TextInputLayout
     private var allStockItems: MutableList<StockItem> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,20 +47,25 @@ class StockGeneralActivity : AppCompatActivity() {
         recyclerViewStock.layoutManager = LinearLayoutManager(this)
 
         stockAdapter = StockAdapter(mutableListOf()) { stockItem ->
-            Toast.makeText(this, "Código: ${stockItem.codigo}", Toast.LENGTH_SHORT).show()
-            Toast.makeText(this, "Descripción: ${stockItem.descripcion}", Toast.LENGTH_SHORT).show()
-            Toast.makeText(this, "Lote: ${stockItem.lote}", Toast.LENGTH_SHORT).show()
-            Toast.makeText(this, "Cantidad: ${stockItem.cantidad}", Toast.LENGTH_SHORT).show()
-            Toast.makeText(this, "Fecha Ingreso: ${stockItem.fechaIngreso}", Toast.LENGTH_SHORT).show()
-            Toast.makeText(this, "Fecha Vencimiento: ${stockItem.fechaVencimiento}", Toast.LENGTH_SHORT).show()
-            Toast.makeText(this, "Orden Compra: ${stockItem.ordenCompra}", Toast.LENGTH_SHORT).show()
-            Toast.makeText(this, "Ubicación: ${stockItem.ubicacion}", Toast.LENGTH_SHORT).show()
-            Toast.makeText(this, "Ubicación Detallada: ${stockItem.ubicacionDetallada}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, activity_mostrarDatos::class.java).apply {
+                putExtra("codigo", stockItem.codigo)
+                putExtra("descripcion", stockItem.descripcion)
+                putExtra("lote", stockItem.lote)
+                putExtra("cantidad", stockItem.cantidad.toString())
+                putExtra("fechaIngreso", stockItem.fechaIngreso)
+                putExtra("fechaVencimiento", stockItem.fechaVencimiento)
+                putExtra("ordenCompra", stockItem.ordenCompra)
+            }
+            startActivity(intent)
         }
         recyclerViewStock.adapter = stockAdapter
 
         buttonSalir = findViewById(R.id.buttonSalir)
         buttonSalir.setOnClickListener {
+            finish()
+        }
+
+        findViewById<ImageButton>(R.id.btnBack).setOnClickListener {
             finish()
         }
 
@@ -72,6 +84,26 @@ class StockGeneralActivity : AppCompatActivity() {
         }
 
         searchEditText = findViewById(R.id.searchEditText)
+        tilSearch = findViewById(R.id.tilSearch)
+
+        val options = GmsBarcodeScannerOptions.Builder()
+            .setBarcodeFormats(Barcode.FORMAT_ALL_FORMATS)
+            .enableAutoZoom()
+            .build()
+        val scanner = GmsBarcodeScanning.getClient(this, options)
+
+        tilSearch.setEndIconOnClickListener {
+            scanner.startScan()
+                .addOnSuccessListener { barcode: Barcode ->
+                    val code = barcode.rawValue ?: ""
+                    searchEditText.setText(code)
+                    filterStockItems(code)
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Escaneo cancelado", Toast.LENGTH_SHORT).show()
+                }
+        }
+
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 

@@ -16,9 +16,9 @@
 
         <TextView
             android:id="@+id/tvTituloSalida"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:gravity="center"
             android:text="@string/title_salida"
             android:textColor="@color/background_light"
@@ -26,7 +26,23 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_max="600dp" />
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="51dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/btn_volver"
+            android:elevation="8dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="@id/tvTituloSalida"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvTituloSalida"
+            app:tint="@color/white" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardInputs"
@@ -38,6 +54,7 @@
             app:cardBackgroundColor="@color/card_background"
             app:strokeColor="@color/text_secondary"
             app:strokeWidth="1dp"
+            app:layout_constraintWidth_max="600dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTituloSalida">
@@ -196,6 +213,11 @@
             android:layout_marginTop="16dp"
             android:hint="@string/hint_buscar_producto"
             app:startIconDrawable="@android:drawable/ic_menu_search"
+            app:endIconMode="custom"
+            app:endIconDrawable="@android:drawable/ic_menu_camera"
+            app:endIconContentDescription="Escanear código"
+            app:endIconTint="@color/primary"
+            app:layout_constraintWidth_max="600dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardInputs">
@@ -214,6 +236,7 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_card_modern"
             android:elevation="1dp"
+            app:layout_constraintWidth_max="600dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tilBusqueda" />
@@ -224,6 +247,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
+            app:layout_constraintWidth_max="600dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rvProductosBusqueda">
@@ -258,12 +282,14 @@
 
         <TextView
             android:id="@+id/tvListaHeader"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/label_productos_seleccionados"
             android:textColor="@color/primary"
             android:textStyle="bold"
+            app:layout_constraintWidth_max="600dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/llButtonsRow1" />
 
@@ -274,6 +300,7 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_card_modern"
             android:elevation="1dp"
+            app:layout_constraintWidth_max="600dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvListaHeader" />
@@ -284,6 +311,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:orientation="horizontal"
+            app:layout_constraintWidth_max="600dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rvProductos">
