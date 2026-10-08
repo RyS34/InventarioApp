@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.InventarioApp" parent="Theme.AppCompat.Light.NoActionBar" />
-    <style name="Theme.InventarioApp.NoActionBar">
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@color/white</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowSoftInputMode">adjustResize</item>
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryDark">@color/purple_700</item>
-        <item name="colorAccent">@color/teal_200</item>
+    <!-- Tema Base Moderno -->
+    <style name="Theme.InventarioApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Colores Principales -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/light_blue</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="android:statusBarColor">@color/primary_variant</item>
 
+        <!-- Estilo de los campos de texto -->
+        <item name="textInputStyle">@style/Widget.Material3.TextInputLayout.OutlinedBox</item>
+    </style>
+
+    <!-- Estilo para Contenedores tipo Tarjeta -->
+    <style name="ModernCard">
+        <item name="android:background">@drawable/bg_card_modern</item>
+        <item name="android:elevation">4dp</item>
+        <item name="android:padding">20dp</item>
     </style>
 </resources>
