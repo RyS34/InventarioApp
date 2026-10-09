@@ -48,10 +48,10 @@ class EntradaProductosAdapter(
             holder.tvLote.setTextColor(Color.WHITE)
         } else {
             holder.itemView.setBackgroundColor(Color.TRANSPARENT)
-            holder.tvDescripcion.setTextColor(holder.itemView.context.getColor(R.color.text_primary))
-            holder.tvCodigo.setTextColor(holder.itemView.context.getColor(R.color.text_secondary))
+            holder.tvDescripcion.setTextColor(holder.itemView.context.getColor(R.color.black))
+            holder.tvCodigo.setTextColor(holder.itemView.context.getColor(R.color.warm_gray))
             holder.tvCantidad.setTextColor(holder.itemView.context.getColor(R.color.primary))
-            holder.tvLote.setTextColor(holder.itemView.context.getColor(R.color.text_hint))
+            holder.tvLote.setTextColor(holder.itemView.context.getColor(R.color.warm_gray))
         }
 
         holder.itemView.setOnClickListener {

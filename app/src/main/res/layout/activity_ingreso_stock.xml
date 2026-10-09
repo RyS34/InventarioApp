@@ -11,10 +11,10 @@
         android:id="@+id/tvTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="60dp"
         android:gravity="center"
         android:text="@string/title_nuevo_ingreso"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnSecondaryContainer"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="@color/smoke_white"
                 app:strokeWidth="1dp"
                 app:strokeColor="@color/gray">
 

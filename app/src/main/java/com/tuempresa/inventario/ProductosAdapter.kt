@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 
 class ProductosAdapter(private var productosList: MutableList<Producto> = mutableListOf()) :
     RecyclerView.Adapter<ProductosAdapter.ProductoViewHolder>() {
@@ -36,28 +37,32 @@ class ProductosAdapter(private var productosList: MutableList<Producto> = mutabl
         holder.tvCantidad.text = producto.cantidad.toString()
         holder.tvUsuario.text = producto.usuario
 
-        // Establecer el color de fondo del elemento seleccionado
-        holder.itemView.setOnClickListener {
-            val newPosition = holder.bindingAdapterPosition
-            if (newPosition != RecyclerView.NO_POSITION) {
-                selectedPosition = newPosition
-                notifyDataSetChanged()
-            }
-        }
+        val cardView = holder.itemView as MaterialCardView
 
-        // Establecer el color de fondo y textos del elemento seleccionado
+        // Efecto de selección y colores
         if (selectedPosition == position) {
-            holder.itemView.setBackgroundResource(R.color.primary_variant)
+            cardView.setCardBackgroundColor(holder.itemView.context.getColor(R.color.primary_variant))
             holder.tvDescripcion.setTextColor(Color.WHITE)
             holder.tvCodigo.setTextColor(Color.WHITE)
             holder.tvCantidad.setTextColor(Color.WHITE)
             holder.tvLote.setTextColor(Color.WHITE)
+            holder.tvUsuario.setTextColor(Color.WHITE)
         } else {
-            holder.itemView.setBackgroundColor(Color.TRANSPARENT)
-            holder.tvDescripcion.setTextColor(holder.itemView.context.getColor(R.color.text_primary))
-            holder.tvCodigo.setTextColor(holder.itemView.context.getColor(R.color.text_secondary))
+            cardView.setCardBackgroundColor(holder.itemView.context.getColor(R.color.white))
+            holder.tvDescripcion.setTextColor(Color.BLACK)
+            holder.tvCodigo.setTextColor(holder.itemView.context.getColor(R.color.warm_gray))
             holder.tvCantidad.setTextColor(holder.itemView.context.getColor(R.color.primary))
-            holder.tvLote.setTextColor(holder.itemView.context.getColor(R.color.text_hint))
+            holder.tvLote.setTextColor(holder.itemView.context.getColor(R.color.warm_gray))
+            holder.tvUsuario.setTextColor(holder.itemView.context.getColor(R.color.warm_gray))
+        }
+
+        holder.itemView.setOnClickListener {
+            val oldPosition = selectedPosition
+            selectedPosition = holder.bindingAdapterPosition
+            if (oldPosition != RecyclerView.NO_POSITION) {
+                notifyItemChanged(oldPosition)
+            }
+            notifyItemChanged(selectedPosition)
         }
     }
 

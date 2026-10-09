@@ -34,6 +34,7 @@ class StockGeneralActivity : AppCompatActivity() {
     private lateinit var stockAdapter: StockAdapter
     private lateinit var buttonSalir: Button
     private lateinit var buttonImportar: Button
+    private lateinit var btnActualizar: ImageButton
     private lateinit var openFileLauncher: ActivityResultLauncher<Intent>
     private lateinit var searchEditText: TextInputEditText
     private lateinit var tilSearch: TextInputLayout
@@ -55,6 +56,7 @@ class StockGeneralActivity : AppCompatActivity() {
                 putExtra("fechaIngreso", stockItem.fechaIngreso)
                 putExtra("fechaVencimiento", stockItem.fechaVencimiento)
                 putExtra("ordenCompra", stockItem.ordenCompra)
+                putExtra("readOnly", true)
             }
             startActivity(intent)
         }
@@ -72,6 +74,16 @@ class StockGeneralActivity : AppCompatActivity() {
         buttonImportar = findViewById(R.id.buttonImportar)
         buttonImportar.setOnClickListener {
             openFileLauncher.launch(createOpenFileIntent())
+        }
+
+        btnActualizar = findViewById(R.id.btnActualizar)
+        btnActualizar.setOnClickListener {
+            // Animación de giro
+            btnActualizar.animate().rotationBy(360f).setDuration(500).start()
+
+            allStockItems = cargarStockItems()
+            filterStockItems(searchEditText.text.toString())
+            Toast.makeText(this, "Stock actualizado", Toast.LENGTH_SHORT).show()
         }
 
         openFileLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

@@ -53,13 +53,13 @@ class StockAdapter(
             holder.tvUbicacionDetallada.setTextColor(Color.WHITE)
         } else {
             holder.itemView.setBackgroundColor(Color.TRANSPARENT)
-            holder.tvCodigo.setTextColor(holder.itemView.context.getColor(R.color.text_primary))
-            holder.tvDescripcion.setTextColor(holder.itemView.context.getColor(R.color.text_primary))
-            holder.tvLote.setTextColor(holder.itemView.context.getColor(R.color.text_secondary))
+            holder.tvCodigo.setTextColor(holder.itemView.context.getColor(R.color.black))
+            holder.tvDescripcion.setTextColor(holder.itemView.context.getColor(R.color.black))
+            holder.tvLote.setTextColor(holder.itemView.context.getColor(R.color.warm_gray))
             holder.tvCantidad.setTextColor(holder.itemView.context.getColor(R.color.primary))
-            holder.tvFechaVencimiento.setTextColor(holder.itemView.context.getColor(R.color.text_secondary))
-            holder.tvUbicacion.setTextColor(holder.itemView.context.getColor(R.color.text_secondary))
-            holder.tvUbicacionDetallada.setTextColor(holder.itemView.context.getColor(R.color.text_secondary))
+            holder.tvFechaVencimiento.setTextColor(holder.itemView.context.getColor(R.color.warm_gray))
+            holder.tvUbicacion.setTextColor(holder.itemView.context.getColor(R.color.warm_gray))
+            holder.tvUbicacionDetallada.setTextColor(holder.itemView.context.getColor(R.color.warm_gray))
         }
 
         holder.itemView.setOnClickListener {

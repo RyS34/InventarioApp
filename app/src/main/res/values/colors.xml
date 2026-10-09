@@ -23,6 +23,16 @@
     <color name="light_orange">#FFFFAC3D</color>
     <color name="light_pink">#FFFF80AB</color>
     <color name="light_brown">#FFD7CCC8</color>
+    <color name="light_grey">#FFBDBDBD</color>
+    <color name="light_blue_grey">#FFB0BEC5</color>
+    <color name="off_white">#FAFAFA</color>
+    <color name="off_black">#000000</color>
+    <color name="warm_white">#F5F5F0</color>
+    <color name="warm_black">#212121</color>
+    <color name="warm_gray">#757575</color>
+    <color name="cool_white">#F8F9FA</color>
+    <color name="smoke_white">#F5F5F5</color>
+
 
     <!-- Paleta Moderna para fondo oscuro -->
     <color name="primary">#4D8DFF</color>

@@ -38,7 +38,7 @@
     <string name="label_fecha_salida">Fecha Salida</string>
     <string name="label_cantidad_retirar">Cantidad a Retirar</string>
     <string name="hint_buscar_producto">Buscar Producto</string>
-    <string name="btn_excel">Excel</string>
+    <string name="btn_excel">Exportar Excel</string>
     <string name="btn_agregar">AGREGAR</string>
     <string name="btn_eliminar">ELIMINAR</string>
     <string name="label_productos_seleccionados">Productos Seleccionados</string>
@@ -56,6 +56,7 @@
     <string name="header_ubicacion">UBICACIÓN</string>
     <string name="header_ubi_detallada">UBI. DETALL.</string>
     <string name="btn_exportar_importar">Exportar/Importar</string>
+    <string name="btn_actualizar">ACTUALIZAR</string>
     <string name="btn_volver">Volver</string>
 
     <!-- Mostrar Datos -->

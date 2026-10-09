@@ -1,6 +1,7 @@
 package com.tuempresa.inventario
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
@@ -10,7 +11,6 @@ class activity_mostrarDatos : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Establecer el layout de la actividad
         setContentView(R.layout.activity_mostrar_datos)
 
         // Obtener referencias a los TextViews de valores
@@ -27,19 +27,26 @@ class activity_mostrarDatos : AppCompatActivity() {
         val btnEditar = findViewById<Button>(R.id.buttonEditar)
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
 
+        // Obtener los datos del Intent
+        val dataIntent = intent
+        val readOnly = dataIntent.getBooleanExtra("readOnly", false)
+
+        // Si es solo lectura, ocultamos el botón Modificar
+        if (readOnly) {
+            btnEditar.visibility = View.GONE
+        }
+
         btnBack.setOnClickListener {
             finish()
         }
 
-        // Obtener los datos del Intent
-        val intent = intent
-        val codigo = intent.getStringExtra("codigo")
-        val descripcion = intent.getStringExtra("descripcion")
-        val lote = intent.getStringExtra("lote")
-        val cantidad = intent.getStringExtra("cantidad")
-        val fechaIngreso = intent.getStringExtra("fechaIngreso")
-        val fechaVencimiento = intent.getStringExtra("fechaVencimiento")
-        val ordenCompra = intent.getStringExtra("ordenCompra")
+        val codigo = dataIntent.getStringExtra("codigo")
+        val descripcion = dataIntent.getStringExtra("descripcion")
+        val lote = dataIntent.getStringExtra("lote")
+        val cantidad = dataIntent.getStringExtra("cantidad")
+        val fechaIngreso = dataIntent.getStringExtra("fechaIngreso")
+        val fechaVencimiento = dataIntent.getStringExtra("fechaVencimiento")
+        val ordenCompra = dataIntent.getStringExtra("ordenCompra")
 
         // Mostrar los datos en los TextViews de valores
         tvCodigoValue.text = codigo
@@ -52,13 +59,13 @@ class activity_mostrarDatos : AppCompatActivity() {
 
         // Configurar el listener del botón OK
         btnOk.setOnClickListener {
-            setResult(RESULT_OK) // Indicar que todo está correcto
+            setResult(RESULT_OK)
             finish() 
         }
 
         // Configurar el listener del botón Modificar
         btnEditar.setOnClickListener {
-            setResult(RESULT_CANCELED) // Indicar que se quiere volver a editar
+            setResult(RESULT_CANCELED)
             finish()
         }
     }

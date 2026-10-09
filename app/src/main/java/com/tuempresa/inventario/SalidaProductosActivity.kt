@@ -72,13 +72,19 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
         productosRecyclerView.adapter = productosAdapter
 
         listaProductosBusqueda = mutableListOf()
-        adaptadorProductosBusqueda = ProductosBusquedaAdapter(listaProductosBusqueda)
+        adaptadorProductosBusqueda = ProductosBusquedaAdapter(listaProductosBusqueda) { selectedProduct ->
+            // Al seleccionar un producto de la búsqueda
+            binding.etDescripcion.setText(selectedProduct.descripcion)
+            binding.etCodigo.setText(selectedProduct.codigo)
+            binding.etLote.setText(selectedProduct.lote)
+            binding.etFechaSalida.setText(SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()))
+            binding.etOperacion.setText((numeroOperaciones++).toString())
+            
+            etBusquedaProductos.text?.clear()
+            binding.etUsuario.requestFocus()
+        }
         binding.rvProductosBusqueda.layoutManager = LinearLayoutManager(this)
         binding.rvProductosBusqueda.adapter = adaptadorProductosBusqueda
-
-        binding.rvProductosBusqueda.addOnItemTouchListener(
-            RecyclerItemClickListener(this, binding.rvProductosBusqueda, this)
-        )
 
         binding.btnBack.setOnClickListener {
             finish()
@@ -187,20 +193,7 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
 
     override fun onItemClick(view: View, position: Int) {}
     override fun onLongItemClick(view: View, position: Int) {}
-
-    override fun onItemDoubleClick(view: View, position: Int) {
-        val prod = adaptadorProductosBusqueda.productos[position]
-        binding.etDescripcion.setText(prod.descripcion)
-        binding.etCodigo.setText(prod.codigo)
-        binding.etLote.setText(prod.lote)
-        binding.etFechaSalida.setText(SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()))
-        binding.etOperacion.setText((numeroOperaciones++).toString())
-        
-        etBusquedaProductos.text?.clear()
-        
-        // Flujo operativo: tras seleccionar producto, ir al usuario
-        binding.etUsuario.requestFocus()
-    }
+    override fun onItemDoubleClick(view: View, position: Int) {}
 
     private fun agregarProductoSalida() {
         val desc = binding.etDescripcion.text.toString()

@@ -11,7 +11,7 @@
         android:id="@+id/tvTituloEntrada"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="60dp"
         android:gravity="center"
         android:text="@string/title_entrada"
         android:textColor="@color/white"
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="@color/smoke_white"
                 app:strokeWidth="1dp"
                 app:strokeColor="@color/gray">
 
@@ -222,7 +222,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_marginTop="8dp"
-                        android:background="#F5F5F5" />
+                        android:background="@drawable/bg_list_with_border" />
 
                     <!-- BOTONES DENTRO DEL CONTENEDOR -->
                     <com.google.android.material.button.MaterialButton
