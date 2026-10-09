@@ -159,7 +159,7 @@
                         android:layout_height="48dp"
                         android:src="@android:drawable/ic_delete"
                         android:contentDescription="@string/btn_salida_productos"
-                        app:tint="@color/primary" />
+                        app:tint="@color/red" />
 
                     <TextView
                         android:layout_width="match_parent"
