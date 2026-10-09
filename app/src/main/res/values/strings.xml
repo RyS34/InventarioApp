@@ -51,11 +51,13 @@
     <string name="header_codigo">CÓDIGO</string>
     <string name="header_descripcion">DESCRIPCIÓN</string>
     <string name="header_lote">LOTE</string>
-    <string name="header_cantidad">CANT.</string>
-    <string name="header_vencimiento">VENCIM.</string>
+    <string name="header_cantidad">CANTIDAD.</string>
+    <string name="header_fecha_ingreso">FECHA INGRESO</string>
+    <string name="header_vencimiento">FECHA VENCIM.</string>
+    <string name="header_orden_compra">O.C.</string>
     <string name="header_ubicacion">UBICACIÓN</string>
-    <string name="header_ubi_detallada">UBI. DETALL.</string>
-    <string name="btn_exportar_importar">Exportar/Importar</string>
+    <string name="header_ubi_detallada">UBI. DETALLADA.</string>
+    <string name="btn_exportar_importar">Exportar</string>
     <string name="btn_actualizar">ACTUALIZAR</string>
     <string name="btn_volver">Volver</string>
 
@@ -68,7 +70,10 @@
     <string name="label_fecha_ingreso_summary">FECHA INGRESO:</string>
     <string name="label_fecha_vencimiento_summary">FECHA VENCIMIENTO:</string>
     <string name="label_orden_compra_summary">ORDEN DE COMPRA:</string>
+    <string name="label_ubicacion_summary">UBICACIÓN:</string>
+    <string name="label_ubi_detallada_summary">UBI. DETALLADA:</string>
     <string name="btn_ok">OK</string>
+    <string name="btn_escanear">Escanear QR</string>
     <string name="version_app">Version 2.0</string>
     <string name="info_footer">Optimiza tu gestión de almacén hoy.</string>
     <string name="desc_info_icon">Icono de información</string>

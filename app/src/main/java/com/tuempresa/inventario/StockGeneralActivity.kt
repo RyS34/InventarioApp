@@ -38,6 +38,7 @@ class StockGeneralActivity : AppCompatActivity() {
     private lateinit var openFileLauncher: ActivityResultLauncher<Intent>
     private lateinit var searchEditText: TextInputEditText
     private lateinit var tilSearch: TextInputLayout
+    private lateinit var btnEscanear: com.google.android.material.button.MaterialButton
     private var allStockItems: MutableList<StockItem> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +57,8 @@ class StockGeneralActivity : AppCompatActivity() {
                 putExtra("fechaIngreso", stockItem.fechaIngreso)
                 putExtra("fechaVencimiento", stockItem.fechaVencimiento)
                 putExtra("ordenCompra", stockItem.ordenCompra)
+                putExtra("ubicacion", stockItem.ubicacion)
+                putExtra("ubiDetallada", stockItem.ubicacionDetallada)
                 putExtra("readOnly", true)
             }
             startActivity(intent)
@@ -97,6 +100,7 @@ class StockGeneralActivity : AppCompatActivity() {
 
         searchEditText = findViewById(R.id.searchEditText)
         tilSearch = findViewById(R.id.tilSearch)
+        btnEscanear = findViewById(R.id.btnEscanear)
 
         val options = GmsBarcodeScannerOptions.Builder()
             .setBarcodeFormats(Barcode.FORMAT_ALL_FORMATS)
@@ -104,7 +108,7 @@ class StockGeneralActivity : AppCompatActivity() {
             .build()
         val scanner = GmsBarcodeScanning.getClient(this, options)
 
-        tilSearch.setEndIconOnClickListener {
+        btnEscanear.setOnClickListener {
             scanner.startScan()
                 .addOnSuccessListener { barcode: Barcode ->
                     val code = barcode.rawValue ?: ""
@@ -172,8 +176,9 @@ class StockGeneralActivity : AppCompatActivity() {
                 val descripcion = row.getCell(2)?.toString() ?: ""
                 val lote = row.getCell(3)?.toString() ?: ""
                 val cantidadString = row.getCell(4)?.toString()?.trim() ?: "0"
-
+                val fechaIngreso = row.getCell(5)?.toString() ?: ""
                 val fechaVencimiento = row.getCell(6)?.toString() ?: ""
+                val ordenCompra = row.getCell(7)?.toString() ?: ""
                 val ubicacion = row.getCell(8)?.toString() ?: ""
                 val ubicacionDetallada = row.getCell(9)?.toString() ?: ""
 
@@ -193,9 +198,9 @@ class StockGeneralActivity : AppCompatActivity() {
                     descripcion,
                     lote,
                     cantidad,
-                    "",
+                    fechaIngreso,
                     fechaVencimiento,
-                    "",
+                    ordenCompra,
                     ubicacion,
                     ubicacionDetallada
                 )
@@ -253,7 +258,9 @@ class StockGeneralActivity : AppCompatActivity() {
                         item.descripcion.contains(query, ignoreCase = true) ||
                         item.lote.contains(query, ignoreCase = true) ||
                         item.cantidad.toString().contains(query, ignoreCase = true) ||
+                        item.fechaIngreso.contains(query, ignoreCase = true) ||
                         item.fechaVencimiento.contains(query, ignoreCase = true) ||
+                        item.ordenCompra.contains(query, ignoreCase = true) ||
                         item.ubicacion.contains(query, ignoreCase = true) ||
                         item.ubicacionDetallada.contains(query, ignoreCase = true)
             }.toMutableList()

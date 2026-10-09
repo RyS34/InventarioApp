@@ -110,17 +110,17 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnImportarExcel"
+                            android:id="@+id/btnEscanear"
                             style="@style/Widget.Material3.Button.IconButton.Filled"
                             android:layout_width="56dp"
                             android:layout_height="56dp"
-                            android:contentDescription="@string/btn_excel"
-                            app:backgroundTint="@color/secondary"
+                            android:contentDescription="@string/btn_escanear"
+                            app:backgroundTint="@color/primary"
                             app:cornerRadius="12dp"
-                            app:icon="@android:drawable/ic_menu_save"
+                            app:icon="@android:drawable/ic_menu_camera"
                             app:iconGravity="textStart"
                             app:iconPadding="0dp"
-                            app:iconSize="24dp"
+                            app:iconSize="28dp"
                             app:iconTint="@color/white" />
                     </LinearLayout>
 

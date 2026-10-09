@@ -21,6 +21,8 @@ class activity_mostrarDatos : AppCompatActivity() {
         val tvFechaIngresoValue = findViewById<TextView>(R.id.tvFechaIngresoValue)
         val tvFechaVencimientoValue = findViewById<TextView>(R.id.tvFechaVencimientoValue)
         val tvOrdenCompraValue = findViewById<TextView>(R.id.tvOrdenCompraValue)
+        val tvUbicacionValue = findViewById<TextView>(R.id.tvUbicacionValue)
+        val tvUbiDetalladaValue = findViewById<TextView>(R.id.tvUbiDetalladaValue)
 
         // Obtener los botones
         val btnOk = findViewById<Button>(R.id.buttonOk)
@@ -47,6 +49,8 @@ class activity_mostrarDatos : AppCompatActivity() {
         val fechaIngreso = dataIntent.getStringExtra("fechaIngreso")
         val fechaVencimiento = dataIntent.getStringExtra("fechaVencimiento")
         val ordenCompra = dataIntent.getStringExtra("ordenCompra")
+        val ubicacion = dataIntent.getStringExtra("ubicacion")
+        val ubiDetallada = dataIntent.getStringExtra("ubiDetallada")
 
         // Mostrar los datos en los TextViews de valores
         tvCodigoValue.text = codigo
@@ -56,6 +60,8 @@ class activity_mostrarDatos : AppCompatActivity() {
         tvFechaIngresoValue.text = fechaIngreso
         tvFechaVencimientoValue.text = fechaVencimiento
         tvOrdenCompraValue.text = ordenCompra
+        tvUbicacionValue.text = ubicacion
+        tvUbiDetalladaValue.text = ubiDetallada
 
         // Configurar el listener del botón OK
         btnOk.setOnClickListener {

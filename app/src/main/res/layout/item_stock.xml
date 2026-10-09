@@ -37,7 +37,21 @@
         android:textSize="14sp" />
 
     <TextView
+        android:id="@+id/tvFechaIngreso"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <TextView
         android:id="@+id/tvFechaVencimiento"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvOrdenCompra"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:textColor="@color/black"

@@ -23,13 +23,12 @@ import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.tuempresa.inventario.databinding.ActivitySalidaProductosBinding
-import org.apache.poi.ss.usermodel.WorkbookFactory
-import java.io.InputStream
-import java.text.SimpleDateFormat
-import java.util.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tuempresa.inventario.model.StockItem
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.OnItemClickListener {
 
@@ -42,27 +41,6 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
     private lateinit var listaProductosBusqueda: MutableList<Producto>
     private lateinit var adaptadorProductosBusqueda: ProductosBusquedaAdapter
     private var numeroOperaciones = 1
-
-    private val openFileLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.data?.let { uri ->
-                try {
-                    contentResolver.openInputStream(uri)?.use { stream ->
-                        val nuevosProductos = obtenerProductosDesdeExcel(stream)
-                        if (nuevosProductos.isNotEmpty()) {
-                            listaProductosBusqueda = nuevosProductos.toMutableList()
-                            adaptadorProductosBusqueda.updateList(listaProductosBusqueda)
-                            // Guardar en el stock persistente para que no se pierda
-                            guardarProductosEnStockPersistente(nuevosProductos)
-                            Toast.makeText(this, "Excel importado y guardado en stock", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                } catch (e: Exception) {
-                    Log.e("Salida", "Error Excel: ${e.message}")
-                }
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,7 +98,7 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
             .build()
         val scanner = GmsBarcodeScanning.getClient(this, options)
 
-        binding.tilBusqueda.setEndIconOnClickListener {
+        binding.btnEscanear.setOnClickListener {
             scanner.startScan()
                 .addOnSuccessListener { barcode: Barcode ->
                     val code = barcode.rawValue ?: ""
@@ -138,13 +116,6 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
             Toast.makeText(this, "Lista de productos actualizada", Toast.LENGTH_SHORT).show()
         }
 
-        binding.btnImportarExcel.setOnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
-                type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            }
-            openFileLauncher.launch(intent)
-        }
-
         binding.etUsuario.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus && binding.etUsuario.text?.isNotEmpty() == true) {
                 binding.etCantidad.requestFocus()
@@ -152,24 +123,9 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
         }
     }
 
-    private fun obtenerProductosDesdeExcel(inputStream: InputStream): List<Producto> {
-        val productos = mutableListOf<Producto>()
-        try {
-            val workbook = WorkbookFactory.create(inputStream)
-            val sheet = workbook.getSheetAt(0)
-            for (rowIndex in 1..sheet.lastRowNum) {
-                val row = sheet.getRow(rowIndex) ?: continue
-                val codigo = row.getCell(1)?.toString() ?: ""
-                val descripcion = row.getCell(2)?.toString() ?: ""
-                val lote = row.getCell(3)?.toString() ?: ""
-                val cantidad = row.getCell(4)?.numericCellValue?.toInt() ?: 0
-                productos.add(Producto(codigo, descripcion, lote, "", "", "", cantidad))
-            }
-            workbook.close()
-        } catch (e: Exception) {
-            Log.e("Excel", "Error parsing: ${e.message}")
-        }
-        return productos
+    override fun onResume() {
+        super.onResume()
+        recargarDatosDesdeStock()
     }
 
     private fun recargarDatosDesdeStock() {
@@ -310,23 +266,6 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
             }
             filterList(etBusquedaProductos.text.toString())
         }
-    }
-
-    private fun guardarProductosEnStockPersistente(productos: List<Producto>) {
-        val sharedPrefs = getSharedPreferences("StockData", Context.MODE_PRIVATE)
-        val json = sharedPrefs.getString("stockList", null)
-        val type = object : TypeToken<MutableList<StockItem>>() {}.type
-        val stockList: MutableList<StockItem> = Gson().fromJson(json, type) ?: mutableListOf()
-
-        productos.forEach { p ->
-            val existing = stockList.find { it.codigo == p.codigo && it.lote == p.lote }
-            if (existing != null) {
-                existing.cantidad = p.cantidad
-            } else {
-                stockList.add(StockItem(p.codigo, p.descripcion, p.lote, p.cantidad, "", "", "", "", ""))
-            }
-        }
-        sharedPrefs.edit().putString("stockList", Gson().toJson(stockList)).apply()
     }
 
     private fun mostrarDialogoModificar(producto: Producto) {

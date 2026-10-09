@@ -204,6 +204,46 @@
                         android:textColor="@color/black"
                         tools:text="OC-998877" />
 
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="12dp" android:background="#EEEEEE" />
+
+                    <TextView
+                        android:id="@+id/tvUbicacionLabel"
+                        style="@style/TextAppearance.Material3.TitleMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_ubicacion_summary"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvUbicacionValue"
+                        style="@style/TextAppearance.Material3.BodyLarge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/black"
+                        tools:text="PATIO 1" />
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="12dp" android:background="#EEEEEE" />
+
+                    <TextView
+                        android:id="@+id/tvUbiDetalladaLabel"
+                        style="@style/TextAppearance.Material3.TitleMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_ubi_detallada_summary"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvUbiDetalladaValue"
+                        style="@style/TextAppearance.Material3.BodyLarge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/black"
+                        tools:text="H-3" />
+
                     <!-- BOTONES DENTRO DEL CONTENEDOR -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/buttonOk"

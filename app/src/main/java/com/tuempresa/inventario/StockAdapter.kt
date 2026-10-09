@@ -20,7 +20,9 @@ class StockAdapter(
         val tvDescripcion: TextView = itemView.findViewById(R.id.tvDescripcion)
         val tvLote: TextView = itemView.findViewById(R.id.tvLote)
         val tvCantidad: TextView = itemView.findViewById(R.id.tvCantidad)
+        val tvFechaIngreso: TextView = itemView.findViewById(R.id.tvFechaIngreso)
         val tvFechaVencimiento: TextView = itemView.findViewById(R.id.tvFechaVencimiento)
+        val tvOrdenCompra: TextView = itemView.findViewById(R.id.tvOrdenCompra)
         val tvUbicacion: TextView = itemView.findViewById(R.id.tvUbicacion)
         val tvUbicacionDetallada: TextView = itemView.findViewById(R.id.tvUbicacionDetallada)
     }
@@ -38,7 +40,9 @@ class StockAdapter(
         holder.tvDescripcion.text = currentItem.descripcion
         holder.tvLote.text = currentItem.lote ?: ""
         holder.tvCantidad.text = currentItem.cantidad.toString()
+        holder.tvFechaIngreso.text = currentItem.fechaIngreso
         holder.tvFechaVencimiento.text = currentItem.fechaVencimiento
+        holder.tvOrdenCompra.text = currentItem.ordenCompra
         holder.tvUbicacion.text = currentItem.ubicacion
         holder.tvUbicacionDetallada.text = currentItem.ubicacionDetallada
 
@@ -48,7 +52,9 @@ class StockAdapter(
             holder.tvDescripcion.setTextColor(Color.WHITE)
             holder.tvLote.setTextColor(Color.WHITE)
             holder.tvCantidad.setTextColor(Color.WHITE)
+            holder.tvFechaIngreso.setTextColor(Color.WHITE)
             holder.tvFechaVencimiento.setTextColor(Color.WHITE)
+            holder.tvOrdenCompra.setTextColor(Color.WHITE)
             holder.tvUbicacion.setTextColor(Color.WHITE)
             holder.tvUbicacionDetallada.setTextColor(Color.WHITE)
         } else {
@@ -57,7 +63,9 @@ class StockAdapter(
             holder.tvDescripcion.setTextColor(holder.itemView.context.getColor(R.color.black))
             holder.tvLote.setTextColor(holder.itemView.context.getColor(R.color.warm_gray))
             holder.tvCantidad.setTextColor(holder.itemView.context.getColor(R.color.primary))
+            holder.tvFechaIngreso.setTextColor(holder.itemView.context.getColor(R.color.warm_gray))
             holder.tvFechaVencimiento.setTextColor(holder.itemView.context.getColor(R.color.warm_gray))
+            holder.tvOrdenCompra.setTextColor(holder.itemView.context.getColor(R.color.warm_gray))
             holder.tvUbicacion.setTextColor(holder.itemView.context.getColor(R.color.warm_gray))
             holder.tvUbicacionDetallada.setTextColor(holder.itemView.context.getColor(R.color.warm_gray))
         }

@@ -72,26 +72,49 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilSearch"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:hint="@string/hint_buscar_codigo_desc"
-                app:startIconDrawable="@android:drawable/ic_menu_search"
-                app:startIconTint="@color/primary"
-                app:endIconMode="clear_text"
-                app:endIconTint="@color/gray"
-                app:hintTextColor="@color/black">
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="8dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/searchEditText"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilSearch"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:hint="@string/hint_buscar_codigo_desc"
+                    app:startIconDrawable="@android:drawable/ic_menu_search"
+                    app:startIconTint="@color/primary"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/gray"
+                    app:hintTextColor="@color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/searchEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEscanear"
+                    style="@style/Widget.Material3.Button.IconButton.Filled"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:contentDescription="@string/btn_escanear"
+                    app:backgroundTint="@color/primary"
+                    app:cornerRadius="12dp"
+                    app:icon="@android:drawable/ic_menu_camera"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="28dp"
+                    app:iconTint="@color/white" />
+            </LinearLayout>
 
             <HorizontalScrollView
                 android:id="@+id/hsvStock"
@@ -145,9 +168,25 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/header_fecha_ingreso"
+                            android:textColor="@android:color/white"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:text="@string/header_vencimiento"
+                            android:textColor="@android:color/white"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/header_orden_compra"
                             android:textColor="@android:color/white"
                             android:textSize="13sp"
                             android:textStyle="bold" />
