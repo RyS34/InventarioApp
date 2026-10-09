@@ -10,9 +10,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 
+import com.tuempresa.inventario.model.StockItem
+
 class ProductosBusquedaAdapter(
-    val productos: MutableList<Producto>,
-    private val onItemClick: (Producto) -> Unit
+    val items: MutableList<StockItem>,
+    private val onItemClick: (StockItem) -> Unit
 ) : RecyclerView.Adapter<ProductosBusquedaAdapter.ProductoViewHolder>() {
 
     var selectedPosition = RecyclerView.NO_POSITION
@@ -24,11 +26,11 @@ class ProductosBusquedaAdapter(
         val tvLote: TextView = itemView.findViewById(R.id.tvLote)
         val tvCantidad: TextView = itemView.findViewById(R.id.tvCantidad)
         
-        fun bind(producto: Producto) {
-            tvCodigo.text = producto.codigo
-            tvDescripcion.text = producto.descripcion
-            tvLote.text = producto.lote
-            tvCantidad.text = producto.cantidad.toString()
+        fun bind(item: StockItem) {
+            tvCodigo.text = item.codigo
+            tvDescripcion.text = item.descripcion
+            tvLote.text = item.lote
+            tvCantidad.text = item.cantidad.toString()
         }
     }
 
@@ -38,8 +40,8 @@ class ProductosBusquedaAdapter(
     }
 
     override fun onBindViewHolder(holder: ProductoViewHolder, position: Int) {
-        val producto = productos[position]
-        holder.bind(producto)
+        val item = items[position]
+        holder.bind(item)
 
         val context = holder.itemView.context
         // Efecto de selección visual consistente usando setCardBackgroundColor
@@ -66,27 +68,27 @@ class ProductosBusquedaAdapter(
                 notifyItemChanged(oldPosition)
             }
             notifyItemChanged(selectedPosition)
-            onItemClick(producto)
+            onItemClick(item)
         }
     }
 
     override fun getItemCount(): Int {
-        return productos.size
+        return items.size
     }
 
-    fun updateList(newList: List<Producto>) {
+    fun updateList(newList: List<StockItem>) {
         // Intentar mantener la selección si el producto sigue en la nueva lista
-        val selectedProduct = if (selectedPosition != RecyclerView.NO_POSITION && selectedPosition < productos.size) {
-            productos[selectedPosition]
+        val selectedProduct = if (selectedPosition != RecyclerView.NO_POSITION && selectedPosition < items.size) {
+            items[selectedPosition]
         } else {
             null
         }
 
-        productos.clear()
-        productos.addAll(newList)
+        items.clear()
+        items.addAll(newList)
 
         if (selectedProduct != null) {
-            selectedPosition = productos.indexOfFirst { 
+            selectedPosition = items.indexOfFirst {
                 it.codigo == selectedProduct.codigo && it.lote == selectedProduct.lote 
             }
         } else {

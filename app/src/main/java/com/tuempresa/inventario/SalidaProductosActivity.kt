@@ -38,7 +38,7 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
 
     private lateinit var productosAdapter: ProductosAdapter
     private val productosList = mutableListOf<Producto>()
-    private lateinit var listaProductosBusqueda: MutableList<Producto>
+    private lateinit var listaProductosBusqueda: MutableList<StockItem>
     private lateinit var adaptadorProductosBusqueda: ProductosBusquedaAdapter
     private var numeroOperaciones = 1
 
@@ -133,10 +133,7 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
         val json = sharedPrefs.getString("stockList", null)
         if (json != null) {
             val type = object : TypeToken<MutableList<StockItem>>() {}.type
-            val stockItems: List<StockItem> = Gson().fromJson(json, type) ?: emptyList()
-            listaProductosBusqueda = stockItems.map { 
-                Producto(it.codigo, it.descripcion, it.lote, "", "", "", it.cantidad) 
-            }.toMutableList()
+            listaProductosBusqueda = Gson().fromJson(json, type) ?: mutableListOf()
             adaptadorProductosBusqueda.updateList(listaProductosBusqueda)
         }
     }
@@ -152,14 +149,22 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
     }
 
     private fun filterList(query: String?) {
-        if (!query.isNullOrEmpty()) {
-            val filtered = listaProductosBusqueda.filter { 
-                it.descripcion.contains(query, true) || it.codigo.contains(query, true) 
+        val filtered = if (!query.isNullOrEmpty()) {
+            listaProductosBusqueda.filter { item ->
+                item.codigo.contains(query, ignoreCase = true) ||
+                        item.descripcion.contains(query, ignoreCase = true) ||
+                        item.lote.contains(query, ignoreCase = true) ||
+                        item.cantidad.toString().contains(query, ignoreCase = true) ||
+                        item.fechaIngreso.contains(query, ignoreCase = true) ||
+                        item.fechaVencimiento.contains(query, ignoreCase = true) ||
+                        item.ordenCompra.contains(query, ignoreCase = true) ||
+                        item.ubicacion.contains(query, ignoreCase = true) ||
+                        item.ubicacionDetallada.contains(query, ignoreCase = true)
             }
-            adaptadorProductosBusqueda.updateList(filtered)
         } else {
-            adaptadorProductosBusqueda.updateList(listaProductosBusqueda)
+            listaProductosBusqueda
         }
+        adaptadorProductosBusqueda.updateList(filtered)
     }
 
     private fun setupListeners() {
