@@ -48,8 +48,14 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
             result.data?.data?.let { uri ->
                 try {
                     contentResolver.openInputStream(uri)?.use { stream ->
-                        listaProductosBusqueda = obtenerProductosDesdeExcel(stream).toMutableList()
-                        adaptadorProductosBusqueda.updateList(listaProductosBusqueda)
+                        val nuevosProductos = obtenerProductosDesdeExcel(stream)
+                        if (nuevosProductos.isNotEmpty()) {
+                            listaProductosBusqueda = nuevosProductos.toMutableList()
+                            adaptadorProductosBusqueda.updateList(listaProductosBusqueda)
+                            // Guardar en el stock persistente para que no se pierda
+                            guardarProductosEnStockPersistente(nuevosProductos)
+                            Toast.makeText(this, "Excel importado y guardado en stock", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 } catch (e: Exception) {
                     Log.e("Salida", "Error Excel: ${e.message}")
@@ -78,7 +84,7 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
             binding.etCodigo.setText(selectedProduct.codigo)
             binding.etLote.setText(selectedProduct.lote)
             binding.etFechaSalida.setText(SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()))
-            binding.etOperacion.setText((numeroOperaciones++).toString())
+            binding.etOperacion.setText(numeroOperaciones.toString())
             
             // Si hay algo en el buscador, lo limpiamos para mostrar la lista completa,
             // pero nos aseguramos de que el item seleccionado sea visible.
@@ -222,10 +228,13 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
                         limpiarCampos()
                         etBusquedaProductos.text?.clear()
                         adaptadorProductosBusqueda.selectedPosition = RecyclerView.NO_POSITION
+                        
+                        // IMPORTANTE: NO limpiamos listaProductosBusqueda.
+                        // Solo refrescamos el adaptador para mostrar el stock actualizado
                         adaptadorProductosBusqueda.notifyDataSetChanged()
                         
-                        // Reiniciar el contador de operaciones para la siguiente carga
-                        numeroOperaciones = 1
+                        // Incrementar el contador de operaciones para la siguiente carga real
+                        numeroOperaciones++
                         binding.etOperacion.setText(numeroOperaciones.toString())
                         
                         etBusquedaProductos.requestFocus()
@@ -323,6 +332,24 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
             // Refrescar vista de búsqueda respetando filtro actual
             filterList(etBusquedaProductos.text.toString())
         }
+    }
+
+    private fun guardarProductosEnStockPersistente(productos: List<Producto>) {
+        val sharedPrefs = getSharedPreferences("StockData", Context.MODE_PRIVATE)
+        val json = sharedPrefs.getString("stockList", null)
+        val type = object : TypeToken<MutableList<StockItem>>() {}.type
+        val stockList: MutableList<StockItem> = Gson().fromJson(json, type) ?: mutableListOf()
+
+        productos.forEach { p ->
+            val existing = stockList.find { it.codigo == p.codigo && it.lote == p.lote }
+            if (existing != null) {
+                existing.cantidad = p.cantidad // Actualizar cantidad si ya existe
+            } else {
+                stockList.add(StockItem(p.codigo, p.descripcion, p.lote, p.cantidad, "", "", "", "", ""))
+            }
+        }
+        
+        sharedPrefs.edit().putString("stockList", Gson().toJson(stockList)).apply()
     }
 
     private fun mostrarDialogoModificar(producto: Producto) {
