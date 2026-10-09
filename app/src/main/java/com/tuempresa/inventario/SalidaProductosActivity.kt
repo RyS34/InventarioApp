@@ -72,7 +72,7 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
         productosRecyclerView.adapter = productosAdapter
 
         listaProductosBusqueda = mutableListOf()
-        adaptadorProductosBusqueda = ProductosBusquedaAdapter(listaProductosBusqueda) { selectedProduct ->
+        adaptadorProductosBusqueda = ProductosBusquedaAdapter(mutableListOf()) { selectedProduct ->
             // Al seleccionar un producto de la búsqueda
             binding.etDescripcion.setText(selectedProduct.descripcion)
             binding.etCodigo.setText(selectedProduct.codigo)
@@ -80,7 +80,20 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
             binding.etFechaSalida.setText(SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()))
             binding.etOperacion.setText((numeroOperaciones++).toString())
             
-            etBusquedaProductos.text?.clear()
+            // Si hay algo en el buscador, lo limpiamos para mostrar la lista completa,
+            // pero nos aseguramos de que el item seleccionado sea visible.
+            if (!etBusquedaProductos.text.isNullOrEmpty()) {
+                etBusquedaProductos.text?.clear()
+                // Al limpiar, se dispara filterList("") -> updateList(fullList)
+                // Buscamos la nueva posición del producto seleccionado en la lista completa
+                val newPos = adaptadorProductosBusqueda.selectedPosition
+                if (newPos != RecyclerView.NO_POSITION) {
+                    binding.rvProductosBusqueda.post {
+                        binding.rvProductosBusqueda.scrollToPosition(newPos)
+                    }
+                }
+            }
+
             binding.etUsuario.requestFocus()
         }
         binding.rvProductosBusqueda.layoutManager = LinearLayoutManager(this)
@@ -92,6 +105,7 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
 
         setupListeners()
         setupSearch()
+        recargarDatosDesdeStock()
 
         // Escáner inteligente para búsqueda rápida
         val options = GmsBarcodeScannerOptions.Builder()
@@ -112,6 +126,13 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
                 .addOnFailureListener {
                     Toast.makeText(this, "Escaneo cancelado", Toast.LENGTH_SHORT).show()
                 }
+        }
+
+        binding.btnActualizar.setOnClickListener {
+            binding.btnActualizar.animate().rotationBy(360f).setDuration(500).start()
+            // Recargar datos de búsqueda si se actualizó el stock general
+            recargarDatosDesdeStock()
+            Toast.makeText(this, "Lista de productos actualizada", Toast.LENGTH_SHORT).show()
         }
 
         binding.btnImportarExcel.setOnClickListener {
@@ -149,6 +170,19 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
         return productos
     }
 
+    private fun recargarDatosDesdeStock() {
+        val sharedPrefs = getSharedPreferences("StockData", Context.MODE_PRIVATE)
+        val json = sharedPrefs.getString("stockList", null)
+        if (json != null) {
+            val type = object : TypeToken<MutableList<StockItem>>() {}.type
+            val stockItems: List<StockItem> = Gson().fromJson(json, type) ?: emptyList()
+            listaProductosBusqueda = stockItems.map { 
+                Producto(it.codigo, it.descripcion, it.lote, "", "", "", it.cantidad) 
+            }.toMutableList()
+            adaptadorProductosBusqueda.updateList(listaProductosBusqueda)
+        }
+    }
+
     private fun setupSearch() {
         etBusquedaProductos.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -172,10 +206,44 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
 
     private fun setupListeners() {
         binding.btnAgregar.setOnClickListener { agregarProductoSalida() }
-        binding.btnSalir.setOnClickListener { finish() }
+        
+        binding.btnSalir.setOnClickListener {
+            if (productosList.isNotEmpty()) {
+                // Mostrar un diálogo de éxito claro en lugar de solo un Toast
+                AlertDialog.Builder(this)
+                    .setTitle("¡Éxito!")
+                    .setMessage("La operación de salida se ha completado correctamente.")
+                    .setPositiveButton("Aceptar") { dialog, _ ->
+                        // Limpiar la lista de productos seleccionados
+                        productosList.clear()
+                        productosAdapter.notifyDataSetChanged()
+                        
+                        // Reiniciar campos y estados
+                        limpiarCampos()
+                        etBusquedaProductos.text?.clear()
+                        adaptadorProductosBusqueda.selectedPosition = RecyclerView.NO_POSITION
+                        adaptadorProductosBusqueda.notifyDataSetChanged()
+                        
+                        // Reiniciar el contador de operaciones para la siguiente carga
+                        numeroOperaciones = 1
+                        binding.etOperacion.setText(numeroOperaciones.toString())
+                        
+                        etBusquedaProductos.requestFocus()
+                        dialog.dismiss()
+                    }
+                    .setCancelable(false)
+                    .show()
+            } else {
+                Toast.makeText(this, "No hay productos en la lista para finalizar", Toast.LENGTH_SHORT).show()
+            }
+        }
         
         binding.btnEliminar.setOnClickListener {
             if (productosAdapter.selectedPosition != RecyclerView.NO_POSITION) {
+                val p = productosList[productosAdapter.selectedPosition]
+                // Devolver stock: pasamos cantidad negativa para que reste negativo (sume)
+                actualizarStockGeneral(p.copy(cantidad = -p.cantidad))
+
                 productosList.removeAt(productosAdapter.selectedPosition)
                 productosAdapter.notifyItemRemoved(productosAdapter.selectedPosition)
                 productosAdapter.selectedPosition = RecyclerView.NO_POSITION
@@ -187,6 +255,8 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
         binding.btnModificar.setOnClickListener {
             if (productosAdapter.selectedPosition != RecyclerView.NO_POSITION) {
                 mostrarDialogoModificar(productosList[productosAdapter.selectedPosition])
+            } else {
+                Toast.makeText(this, "Seleccione un item para modificar", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -202,7 +272,15 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
         val cant = binding.etCantidad.text.toString().toIntOrNull() ?: 0
         val usu = binding.etUsuario.text.toString()
 
+        // Validar stock disponible antes de agregar
+        val stockDisponible = listaProductosBusqueda.find { it.codigo == cod && it.lote == lote }?.cantidad ?: 0
+
         if (cod.isNotEmpty() && cant > 0 && usu.isNotEmpty()) {
+            if (cant > stockDisponible) {
+                Toast.makeText(this, "Stock insuficiente ($stockDisponible disponible)", Toast.LENGTH_SHORT).show()
+                return
+            }
+
             val p = Producto(cod, desc, lote, binding.etFechaSalida.text.toString(), 
                              binding.etOperacion.text.toString(), usu, cant)
             productosList.add(p)
@@ -237,11 +315,17 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
         item?.let {
             it.cantidad = (it.cantidad - producto.cantidad).coerceAtLeast(0)
             sharedPrefs.edit().putString("stockList", Gson().toJson(stockList)).apply()
+            
+            // Sincronizar consistencia en la lista de búsqueda local
+            listaProductosBusqueda.find { p -> p.codigo == it.codigo && p.lote == it.lote }?.let { localP ->
+                localP.cantidad = it.cantidad
+            }
+            // Refrescar vista de búsqueda respetando filtro actual
+            filterList(etBusquedaProductos.text.toString())
         }
     }
 
     private fun mostrarDialogoModificar(producto: Producto) {
-        // Lógica de diálogo similar pero simplificada para mantener consistencia
         val builder = AlertDialog.Builder(this).setTitle("Modificar Cantidad")
         val input = EditText(this).apply {
             hint = "Nueva Cantidad"
@@ -251,8 +335,20 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
         builder.setView(input)
         builder.setPositiveButton("Guardar") { _, _ ->
             val nuevaCant = input.text.toString().toIntOrNull() ?: producto.cantidad
-            producto.cantidad = nuevaCant
-            productosAdapter.notifyDataSetChanged()
+            val diferencia = nuevaCant - producto.cantidad
+            
+            // Validar stock disponible para el incremento
+            val stockDisponible = listaProductosBusqueda.find { it.codigo == producto.codigo && it.lote == producto.lote }?.cantidad ?: 0
+            
+            if (diferencia > stockDisponible) {
+                Toast.makeText(this, "Stock insuficiente para aumentar la cantidad", Toast.LENGTH_SHORT).show()
+            } else {
+                // Actualizar stock general con la diferencia (si es positivo resta, si es negativo suma)
+                actualizarStockGeneral(producto.copy(cantidad = diferencia))
+                
+                producto.cantidad = nuevaCant
+                productosAdapter.notifyDataSetChanged()
+            }
         }
         builder.setNegativeButton("Cancelar", null)
         builder.show()

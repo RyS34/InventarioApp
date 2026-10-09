@@ -142,7 +142,7 @@
                 android:layout_margin="8dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardBackgroundColor="@color/card_background"
+                app:cardBackgroundColor="@color/light_green"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="6dp"
                 app:rippleColor="#20FFFFFF">
