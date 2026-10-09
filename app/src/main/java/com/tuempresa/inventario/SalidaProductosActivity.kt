@@ -57,28 +57,7 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
 
         listaProductosBusqueda = mutableListOf()
         adaptadorProductosBusqueda = ProductosBusquedaAdapter(mutableListOf()) { selectedProduct ->
-            // Al seleccionar un producto de la búsqueda
-            binding.etDescripcion.setText(selectedProduct.descripcion)
-            binding.etCodigo.setText(selectedProduct.codigo)
-            binding.etLote.setText(selectedProduct.lote)
-            binding.etFechaSalida.setText(SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()))
-            binding.etOperacion.setText(numeroOperaciones.toString())
-            
-            // Si hay algo en el buscador, lo limpiamos para mostrar la lista completa,
-            // pero nos aseguramos de que el item seleccionado sea visible.
-            if (!etBusquedaProductos.text.isNullOrEmpty()) {
-                etBusquedaProductos.text?.clear()
-                // Al limpiar, se dispara filterList("") -> updateList(fullList)
-                // Buscamos la nueva posición del producto seleccionado en la lista completa
-                val newPos = adaptadorProductosBusqueda.selectedPosition
-                if (newPos != RecyclerView.NO_POSITION) {
-                    binding.rvProductosBusqueda.post {
-                        binding.rvProductosBusqueda.scrollToPosition(newPos)
-                    }
-                }
-            }
-
-            binding.etUsuario.requestFocus()
+            seleccionarProducto(selectedProduct)
         }
         binding.rvProductosBusqueda.layoutManager = LinearLayoutManager(this)
         binding.rvProductosBusqueda.adapter = adaptadorProductosBusqueda
@@ -103,7 +82,8 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
                 .addOnSuccessListener { barcode: Barcode ->
                     val code = barcode.rawValue ?: ""
                     etBusquedaProductos.setText(code)
-                    filterList(code)
+                    // Forzamos el filtrado con auto-selección si hay coincidencia exacta
+                    filterList(code, autoSelectIfExactMatch = true)
                 }
                 .addOnFailureListener {
                     Toast.makeText(this, "Escaneo cancelado", Toast.LENGTH_SHORT).show()
@@ -114,6 +94,10 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
             binding.btnActualizar.animate().rotationBy(360f).setDuration(500).start()
             recargarDatosDesdeStock()
             Toast.makeText(this, "Lista de productos actualizada", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.btnLimpiar.setOnClickListener {
+            limpiarFormularioCompleto()
         }
 
         binding.etUsuario.setOnFocusChangeListener { _, hasFocus ->
@@ -148,7 +132,7 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
         })
     }
 
-    private fun filterList(query: String?) {
+    private fun filterList(query: String?, autoSelectIfExactMatch: Boolean = false) {
         val filtered = if (!query.isNullOrEmpty()) {
             listaProductosBusqueda.filter { item ->
                 item.codigo.contains(query, ignoreCase = true) ||
@@ -165,6 +149,42 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
             listaProductosBusqueda
         }
         adaptadorProductosBusqueda.updateList(filtered)
+
+        // Si se escaneó y hay una coincidencia exacta de código, o solo quedó un resultado, lo seleccionamos
+        if (autoSelectIfExactMatch && !query.isNullOrEmpty()) {
+            val exactMatch = filtered.find { it.codigo.equals(query, ignoreCase = true) }
+            if (exactMatch != null) {
+                seleccionarProducto(exactMatch)
+            } else if (filtered.size == 1) {
+                seleccionarProducto(filtered[0])
+            }
+        }
+    }
+
+    private fun seleccionarProducto(item: StockItem) {
+        binding.etDescripcion.setText(item.descripcion)
+        binding.etCodigo.setText(item.codigo)
+        binding.etLote.setText(item.lote)
+        binding.etFechaSalida.setText(SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()))
+        binding.etOperacion.setText(numeroOperaciones.toString())
+
+        // Limpiar búsqueda para ver la lista completa pero mantener el foco en la acción
+        if (!etBusquedaProductos.text.isNullOrEmpty()) {
+            etBusquedaProductos.text?.clear()
+            // Buscamos la nueva posición del producto seleccionado en la lista completa para resaltar
+            val newPos = adaptadorProductosBusqueda.items.indexOfFirst {
+                it.codigo == item.codigo && it.lote == item.lote
+            }
+            if (newPos != RecyclerView.NO_POSITION) {
+                adaptadorProductosBusqueda.selectedPosition = newPos
+                adaptadorProductosBusqueda.notifyDataSetChanged()
+                binding.rvProductosBusqueda.post {
+                    binding.rvProductosBusqueda.scrollToPosition(newPos)
+                }
+            }
+        }
+
+        binding.etUsuario.requestFocus()
     }
 
     private fun setupListeners() {
@@ -178,10 +198,7 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
                     .setPositiveButton("Aceptar") { dialog, _ ->
                         productosList.clear()
                         productosAdapter.notifyDataSetChanged()
-                        limpiarCampos()
-                        etBusquedaProductos.text?.clear()
-                        adaptadorProductosBusqueda.selectedPosition = RecyclerView.NO_POSITION
-                        adaptadorProductosBusqueda.notifyDataSetChanged()
+                        limpiarFormularioCompleto()
                         numeroOperaciones++
                         binding.etOperacion.setText(numeroOperaciones.toString())
                         etBusquedaProductos.requestFocus()
@@ -253,6 +270,14 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
         binding.etLote.text?.clear()
         binding.etUsuario.text?.clear()
         binding.etCantidad.text?.clear()
+    }
+
+    private fun limpiarFormularioCompleto() {
+        limpiarCampos()
+        etBusquedaProductos.text?.clear()
+        adaptadorProductosBusqueda.selectedPosition = RecyclerView.NO_POSITION
+        adaptadorProductosBusqueda.notifyDataSetChanged()
+        Toast.makeText(this, "Formulario limpiado", Toast.LENGTH_SHORT).show()
     }
 
     private fun actualizarStockGeneral(producto: Producto) {

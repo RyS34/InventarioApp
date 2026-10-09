@@ -6,6 +6,9 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.tuempresa.inventario.model.StockItem
 
 class activity_mostrarDatos : AppCompatActivity() {
 
@@ -23,6 +26,7 @@ class activity_mostrarDatos : AppCompatActivity() {
         val tvOrdenCompraValue = findViewById<TextView>(R.id.tvOrdenCompraValue)
         val tvUbicacionValue = findViewById<TextView>(R.id.tvUbicacionValue)
         val tvUbiDetalladaValue = findViewById<TextView>(R.id.tvUbiDetalladaValue)
+        val tvStockTotalValue = findViewById<TextView>(R.id.tvStockTotalValue)
 
         // Obtener los botones
         val btnOk = findViewById<Button>(R.id.buttonOk)
@@ -63,6 +67,12 @@ class activity_mostrarDatos : AppCompatActivity() {
         tvUbicacionValue.text = ubicacion
         tvUbiDetalladaValue.text = ubiDetallada
 
+        // Calcular y mostrar Stock Total
+        if (codigo != null) {
+            val stockTotal = calcularStockTotal(codigo)
+            tvStockTotalValue.text = stockTotal.toString()
+        }
+
         // Configurar el listener del botón OK
         btnOk.setOnClickListener {
             setResult(RESULT_OK)
@@ -74,5 +84,19 @@ class activity_mostrarDatos : AppCompatActivity() {
             setResult(RESULT_CANCELED)
             finish()
         }
+    }
+
+    private fun calcularStockTotal(codigo: String): Int {
+        val sharedPreferences = getSharedPreferences("StockData", MODE_PRIVATE)
+        val stockListJson = sharedPreferences.getString("stockList", null)
+        if (stockListJson != null) {
+            val gson = Gson()
+            val type = object : TypeToken<MutableList<StockItem>>() {}.type
+            val stockList: List<StockItem> = gson.fromJson(stockListJson, type)
+
+            // Sumar cantidades de todos los items que tengan el mismo código
+            return stockList.filter { it.codigo == codigo }.sumOf { it.cantidad }
+        }
+        return 0
     }
 }

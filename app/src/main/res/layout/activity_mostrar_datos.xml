@@ -106,6 +106,37 @@
 
                     <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="12dp" android:background="#EEEEEE" />
 
+                    <!-- SECCIÓN STOCK TOTAL -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="#F0F7FF"
+                        android:padding="12dp"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:id="@+id/tvStockTotalLabel"
+                            style="@style/TextAppearance.Material3.TitleMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_stock_total_summary"
+                            android:textColor="#0056b3"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvStockTotalValue"
+                            style="@style/TextAppearance.Material3.HeadlineSmall"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="#0056b3"
+                            android:textStyle="bold"
+                            tools:text="450" />
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="12dp" android:background="#EEEEEE" />
+
                     <TextView
                         android:id="@+id/tvLoteLabel"
                         style="@style/TextAppearance.Material3.TitleMedium"
