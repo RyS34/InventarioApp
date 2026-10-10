@@ -69,7 +69,7 @@
             android:layout_marginStart="8dp"
             android:textColor="@color/black"
             android:textSize="11sp"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

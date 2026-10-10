@@ -165,6 +165,16 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
         binding.etDescripcion.setText(item.descripcion)
         binding.etCodigo.setText(item.codigo)
         binding.etLote.setText(item.lote)
+        
+        // Mantener nitidez visual usando isFocusable en lugar de isEnabled
+        binding.etDescripcion.isFocusable = false
+        binding.etDescripcion.isFocusableInTouchMode = false
+        binding.etCodigo.isFocusable = false
+        binding.etCodigo.isFocusableInTouchMode = false
+        binding.etLote.isFocusable = false
+        binding.etLote.isFocusableInTouchMode = false
+
+        // Usamos .fecha en lugar de .fechaSalida (aunque el binding se llame etFechaSalida)
         binding.etFechaSalida.setText(SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()))
         binding.etOperacion.setText(numeroOperaciones.toString())
 
@@ -270,6 +280,13 @@ class SalidaProductosActivity : AppCompatActivity(), RecyclerItemClickListener.O
         binding.etLote.text?.clear()
         binding.etUsuario.text?.clear()
         binding.etCantidad.text?.clear()
+
+        binding.etDescripcion.isFocusable = true
+        binding.etDescripcion.isFocusableInTouchMode = true
+        binding.etCodigo.isFocusable = true
+        binding.etCodigo.isFocusableInTouchMode = true
+        binding.etLote.isFocusable = true
+        binding.etLote.isFocusableInTouchMode = true
     }
 
     private fun limpiarFormularioCompleto() {

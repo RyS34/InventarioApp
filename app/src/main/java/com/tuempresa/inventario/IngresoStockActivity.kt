@@ -230,17 +230,35 @@ class IngresoStockActivity : AppCompatActivity() {
                 spinnerUbicacion.text.isNotEmpty() &&
                 spinnerUbicacionDetallada.text.isNotEmpty()
     }
-
-    private fun guardarStockItem(stockItem: StockItem) {
+    // Guardar el objeto StockItem en SharedPreferences con Gson
+    private fun guardarStockItem(nuevoItem: StockItem) {
         val sharedPreferences = getSharedPreferences("StockData", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         val gson = Gson()
 
+        // Recuperar la lista existente o crear una nueva si no existe (null)
         val stockListJson = sharedPreferences.getString("stockList", null)
         val type = object : TypeToken<MutableList<StockItem>>() {}.type
         val stockList: MutableList<StockItem> = gson.fromJson(stockListJson, type) ?: mutableListOf()
 
-        stockList.add(stockItem)
+        // Verificar si ya existe el código y lote en la lista
+        val index = stockList.indexOfFirst { it.codigo == nuevoItem.codigo && it.lote == nuevoItem.lote }
+        if (index != -1) {
+            // Si ya existe el código y lote, sumamos la cantidad y actualizamos el resto de datos
+            val itemExistente = stockList[index]
+            stockList[index] = itemExistente.copy(
+                cantidad = itemExistente.cantidad + nuevoItem.cantidad,
+                descripcion = nuevoItem.descripcion,
+                fechaIngreso = nuevoItem.fechaIngreso,
+                fechaVencimiento = nuevoItem.fechaVencimiento,
+                ordenCompra = nuevoItem.ordenCompra,
+                ubicacion = nuevoItem.ubicacion,
+                ubicacionDetallada = nuevoItem.ubicacionDetallada
+            )
+        } else {
+            stockList.add(nuevoItem)
+        }
+        // Guardar la lista actualizada en SharedPreferences con Gson y commit para aplicar los cambios
         val updatedStockListJson = gson.toJson(stockList)
         editor.putString("stockList", updatedStockListJson)
         editor.apply()
