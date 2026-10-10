@@ -12,6 +12,7 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputLayout
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.gson.Gson
@@ -34,15 +35,25 @@ class IngresoStockActivity : AppCompatActivity() {
     private lateinit var etLote: EditText
     private lateinit var etCantidad: EditText
     private lateinit var etOrdenCompra: EditText
-    private lateinit var spinnerUbicacion: AutoCompleteTextView
-    private lateinit var spinnerUbicacionDetallada: AutoCompleteTextView
+    private lateinit var spinnerUbicacion: MaterialAutoCompleteTextView
+    private lateinit var spinnerUbicacionDetallada: MaterialAutoCompleteTextView
     private var tempStockItem: StockItem? = null
 
     private val mostrarDatosLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             // El usuario confirmó los datos en la pantalla de resumen
-            tempStockItem?.let { 
-                guardarStockItem(it)
+            val data = result.data
+            tempStockItem?.let { item ->
+                // Actualizar ubicación si el usuario la cambió en la pantalla de resumen
+                val nuevaUbicacion = data?.getStringExtra("ubicacion") ?: item.ubicacion
+                val nuevaUbiDetallada = data?.getStringExtra("ubiDetallada") ?: item.ubicacionDetallada
+                
+                val itemFinal = item.copy(
+                    ubicacion = nuevaUbicacion,
+                    ubicacionDetallada = nuevaUbiDetallada
+                )
+                
+                guardarStockItem(itemFinal)
                 Toast.makeText(this, "Artículo ingresado con éxito.", Toast.LENGTH_SHORT).show()
             }
             limpiarCampos()
@@ -99,11 +110,8 @@ class IngresoStockActivity : AppCompatActivity() {
         val ubicaciones = resources.getStringArray(R.array.Ubicacion)
         val ubicacionesDetalladas = resources.getStringArray(R.array.UbicacionDetallada)
 
-        val adaptadorUbicaciones = ArrayAdapter(this, R.layout.spinner_item, ubicaciones)
-        val adaptadorUbicacionesDetalladas = ArrayAdapter(this, R.layout.spinner_item, ubicacionesDetalladas)
-
-        spinnerUbicacion.setAdapter(adaptadorUbicaciones)
-        spinnerUbicacionDetallada.setAdapter(adaptadorUbicacionesDetalladas)
+        spinnerUbicacion.setSimpleItems(ubicaciones)
+        spinnerUbicacionDetallada.setSimpleItems(ubicacionesDetalladas)
 
         etFechaIngreso.setOnClickListener {
             mostrarDatePicker(etFechaIngreso)
@@ -149,6 +157,8 @@ class IngresoStockActivity : AppCompatActivity() {
                     putExtra("fechaIngreso", fechaIngreso)
                     putExtra("fechaVencimiento", fechaVencimiento)
                     putExtra("ordenCompra", ordenCompra)
+                    putExtra("ubicacion", ubicacion)
+                    putExtra("ubiDetallada", ubicacionDetallada)
                 }
                 
                 // Guardamos el objeto temporalmente para usarlo si el usuario presiona OK

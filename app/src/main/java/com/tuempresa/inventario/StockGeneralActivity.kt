@@ -41,6 +41,20 @@ class StockGeneralActivity : AppCompatActivity() {
     private lateinit var btnEscanear: com.google.android.material.button.MaterialButton
     private var allStockItems: MutableList<StockItem> = mutableListOf()
 
+    private val detailsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data = result.data
+            val codigo = data?.getStringExtra("codigo")
+            val lote = data?.getStringExtra("lote")
+            val nuevaUbicacion = data?.getStringExtra("ubicacion")
+            val nuevaUbiDetallada = data?.getStringExtra("ubiDetallada")
+
+            if (codigo != null && lote != null) {
+                actualizarUbicacionEnStock(codigo, lote, nuevaUbicacion, nuevaUbiDetallada)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stock_general)
@@ -61,7 +75,7 @@ class StockGeneralActivity : AppCompatActivity() {
                 putExtra("ubiDetallada", stockItem.ubicacionDetallada)
                 putExtra("readOnly", true)
             }
-            startActivity(intent)
+            detailsLauncher.launch(intent)
         }
         recyclerViewStock.adapter = stockAdapter
 
@@ -270,5 +284,26 @@ class StockGeneralActivity : AppCompatActivity() {
         stockAdapter.stockList.clear()
         stockAdapter.stockList.addAll(filteredList)
         stockAdapter.notifyDataSetChanged()
+    }
+
+    private fun actualizarUbicacionEnStock(codigo: String, lote: String, ubi: String?, ubiDet: String?) {
+        val sharedPreferences = getSharedPreferences("StockData", Context.MODE_PRIVATE)
+        val stockListJson = sharedPreferences.getString("stockList", null)
+        if (stockListJson != null) {
+            val gson = Gson()
+            val type = object : TypeToken<MutableList<StockItem>>() {}.type
+            val stockList: MutableList<StockItem> = gson.fromJson(stockListJson, type)
+
+            val index = stockList.indexOfFirst { it.codigo == codigo && it.lote == lote }
+            if (index != -1) {
+                stockList[index].ubicacion = ubi ?: stockList[index].ubicacion
+                stockList[index].ubicacionDetallada = ubiDet ?: stockList[index].ubicacionDetallada
+                
+                guardarStockItems(stockList)
+                allStockItems = stockList
+                filterStockItems(searchEditText.text.toString())
+                Toast.makeText(this, "Ubicación actualizada", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

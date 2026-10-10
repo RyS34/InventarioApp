@@ -73,7 +73,7 @@
     <string name="label_orden_compra_summary">ORDEN DE COMPRA:</string>
     <string name="label_ubicacion_summary">UBICACIÓN:</string>
     <string name="label_ubi_detallada_summary">UBI. DETALLADA:</string>
-    <string name="label_stock_total_summary">STOCK TOTAL (Todos los lotes):</string>
+    <string name="label_stock_total_summary">STOCK TOTAL</string>
     <string name="btn_ok">OK</string>
     <string name="btn_escanear">Escanear QR</string>
     <string name="version_app">Version 2.0</string>

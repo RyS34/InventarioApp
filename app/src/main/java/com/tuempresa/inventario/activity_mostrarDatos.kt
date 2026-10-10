@@ -1,11 +1,15 @@
 package com.tuempresa.inventario
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tuempresa.inventario.model.StockItem
@@ -24,8 +28,8 @@ class activity_mostrarDatos : AppCompatActivity() {
         val tvFechaIngresoValue = findViewById<TextView>(R.id.tvFechaIngresoValue)
         val tvFechaVencimientoValue = findViewById<TextView>(R.id.tvFechaVencimientoValue)
         val tvOrdenCompraValue = findViewById<TextView>(R.id.tvOrdenCompraValue)
-        val tvUbicacionValue = findViewById<TextView>(R.id.tvUbicacionValue)
-        val tvUbiDetalladaValue = findViewById<TextView>(R.id.tvUbiDetalladaValue)
+        val tvUbicacionValue = findViewById<MaterialAutoCompleteTextView>(R.id.tvUbicacionValue)
+        val tvUbiDetalladaValue = findViewById<MaterialAutoCompleteTextView>(R.id.tvUbiDetalladaValue)
         val tvStockTotalValue = findViewById<TextView>(R.id.tvStockTotalValue)
 
         // Obtener los botones
@@ -36,15 +40,6 @@ class activity_mostrarDatos : AppCompatActivity() {
         // Obtener los datos del Intent
         val dataIntent = intent
         val readOnly = dataIntent.getBooleanExtra("readOnly", false)
-
-        // Si es solo lectura, ocultamos el botón Modificar
-        if (readOnly) {
-            btnEditar.visibility = View.GONE
-        }
-
-        btnBack.setOnClickListener {
-            finish()
-        }
 
         val codigo = dataIntent.getStringExtra("codigo")
         val descripcion = dataIntent.getStringExtra("descripcion")
@@ -64,8 +59,33 @@ class activity_mostrarDatos : AppCompatActivity() {
         tvFechaIngresoValue.text = fechaIngreso
         tvFechaVencimientoValue.text = fechaVencimiento
         tvOrdenCompraValue.text = ordenCompra
-        tvUbicacionValue.text = ubicacion
-        tvUbiDetalladaValue.text = ubiDetallada
+        
+        // Configurar adaptadores para las ubicaciones SIEMPRE
+        val ubicaciones = resources.getStringArray(R.array.Ubicacion)
+        val ubicacionesDetalladas = resources.getStringArray(R.array.UbicacionDetallada)
+        
+        val adapterUbi = ArrayAdapter(this, R.layout.spinner_item, ubicaciones)
+        val adapterDet = ArrayAdapter(this, R.layout.spinner_item, ubicacionesDetalladas)
+        
+        tvUbicacionValue.setAdapter(adapterUbi)
+        tvUbiDetalladaValue.setAdapter(adapterDet)
+
+        // Forzar el despliegue al hacer clic
+        tvUbicacionValue.setOnClickListener { tvUbicacionValue.showDropDown() }
+        tvUbiDetalladaValue.setOnClickListener { tvUbiDetalladaValue.showDropDown() }
+
+        // Cargar los valores actuales sin filtrar la lista
+        tvUbicacionValue.setText(ubicacion ?: "", false)
+        tvUbiDetalladaValue.setText(ubiDetallada ?: "", false)
+
+        if (readOnly) {
+            // En modo lectura ocultamos el botón de modificar pero dejamos que se vea la ubicación
+            btnEditar.visibility = View.GONE
+        }
+
+        btnBack.setOnClickListener {
+            finish()
+        }
 
         // Calcular y mostrar Stock Total
         if (codigo != null) {
@@ -75,7 +95,13 @@ class activity_mostrarDatos : AppCompatActivity() {
 
         // Configurar el listener del botón OK
         btnOk.setOnClickListener {
-            setResult(RESULT_OK)
+            val resultIntent = Intent().apply {
+                putExtra("ubicacion", tvUbicacionValue.text.toString())
+                putExtra("ubiDetallada", tvUbiDetalladaValue.text.toString())
+                putExtra("codigo", tvCodigoValue.text.toString())
+                putExtra("lote", tvLoteValue.text.toString())
+            }
+            setResult(RESULT_OK, resultIntent)
             finish() 
         }
 

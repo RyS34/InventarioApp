@@ -66,31 +66,108 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
-                    <!-- Búsqueda integrada en el card -->
-                    <com.google.android.material.textfield.TextInputLayout
+                    <!-- Búsqueda y Botón Escaneo -->
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/hint_buscar_stock"
-                        app:startIconDrawable="@android:drawable/ic_menu_search"
-                        app:startIconTint="@color/primary"
-                        app:endIconMode="clear_text"
-                        app:endIconTint="@color/gray"
-                        app:hintTextColor="@color/black"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/searchEditText"
-                            android:layout_width="match_parent"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilBusqueda"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:inputType="text" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            android:hint="@string/hint_buscar_stock"
+                            app:startIconDrawable="@android:drawable/ic_menu_search"
+                            app:startIconTint="@color/primary"
+                            app:endIconMode="clear_text"
+                            app:endIconTint="@color/gray"
+                            app:hintTextColor="@color/black">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/searchEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:inputType="text" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnEscanear"
+                            style="@style/Widget.Material3.Button.IconButton.Filled"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:contentDescription="@string/btn_escanear"
+                            app:backgroundTint="@color/primary"
+                            app:cornerRadius="12dp"
+                            app:icon="@android:drawable/ic_menu_camera"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp"
+                            app:iconSize="28dp"
+                            app:iconTint="@color/white" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvProductosBusqueda"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/bg_list_with_border" />
 
                     <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="16dp" android:background="#EEEEEE" />
+
+                    <!-- Formulario de Entrada -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilDescripcion"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            android:hint="@string/label_descripcion_prod"
+                            app:hintTextColor="@color/black">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etDescripcion"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:inputType="text" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnLimpiar"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="4dp"
+                            android:text="@string/btn_limpiar"
+                            android:textColor="@color/primary"
+                            android:textSize="12sp"
+                            app:cornerRadius="8dp"
+                            app:icon="@android:drawable/ic_menu_close_clear_cancel"
+                            app:iconSize="16dp"
+                            app:iconTint="@color/primary"
+                            app:strokeColor="@color/primary"
+                            app:strokeWidth="1dp" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
                         android:orientation="horizontal">
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -101,9 +178,6 @@
                             android:layout_weight="1"
                             android:layout_marginEnd="8dp"
                             android:hint="@string/label_codigo"
-                            app:endIconMode="custom"
-                            app:endIconDrawable="@android:drawable/ic_menu_camera"
-                            app:endIconTint="@color/primary"
                             app:hintTextColor="@color/black">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -112,65 +186,6 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/black"
                                 android:inputType="text" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilUsuario"
-                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:hint="@string/label_usuario"
-                            app:hintTextColor="@color/black">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etUsuario"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/black"
-                                android:inputType="text" />
-                        </com.google.android.material.textfield.TextInputLayout>
-                    </LinearLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilDescripcion"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:hint="@string/label_descripcion_prod"
-                        app:hintTextColor="@color/black">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etDescripcion"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:inputType="text" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilCantidad"
-                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="8dp"
-                            android:hint="@string/label_cantidad"
-                            app:hintTextColor="@color/black">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etCantidad"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/black"
-                                android:inputType="number" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -192,6 +207,40 @@
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilUsuario"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="@string/label_usuario"
+                        app:hintTextColor="@color/black">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etUsuario"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilCantidad"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="@string/label_cantidad"
+                        app:hintTextColor="@color/black">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etCantidad"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilFechaIngreso"
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
@@ -208,21 +257,6 @@
                             android:focusable="false"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/label_resultados_busqueda"
-                        android:textStyle="bold"
-                        android:textColor="@color/primary" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvProductos"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/bg_list_with_border" />
 
                     <!-- BOTONES DENTRO DEL CONTENEDOR -->
                     <com.google.android.material.button.MaterialButton

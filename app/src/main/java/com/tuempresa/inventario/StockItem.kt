@@ -8,7 +8,7 @@ data class StockItem(
     val fechaIngreso: String,
     val fechaVencimiento: String,
     val ordenCompra: String,
-    val ubicacion: String,
-    val ubicacionDetallada: String,
+    var ubicacion: String,
+    var ubicacionDetallada: String,
     var usuario: String = "" // Cambiado a var
 )

@@ -226,13 +226,12 @@
                         app:startIconTint="@color/primary"
                         app:boxStrokeColor="@color/primary">
 
-                        <AutoCompleteTextView
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
                             android:id="@+id/spinnerUbicacion"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="none"
-                            android:textColor="@color/black"
-                            android:padding="16dp" />
+                            android:textColor="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -247,13 +246,12 @@
                         app:startIconTint="@color/primary"
                         app:boxStrokeColor="@color/primary">
 
-                        <AutoCompleteTextView
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
                             android:id="@+id/spinnerUbicacionDetallada"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="none"
-                            android:textColor="@color/black"
-                            android:padding="16dp" />
+                            android:textColor="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- BOTONES DENTRO DEL CONTENEDOR (Card) -->
