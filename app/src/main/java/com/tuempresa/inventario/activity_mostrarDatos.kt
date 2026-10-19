@@ -91,7 +91,14 @@ class activity_mostrarDatos : AppCompatActivity() {
             tvCantidadValue.text = dataIntent.getStringExtra("cantidad")
             tvFechaIngresoValue.text = dataIntent.getStringExtra("fechaIngreso")
             tvFechaVencimientoValue.text = dataIntent.getStringExtra("fechaVencimiento")
-            tvOrdenCompraValue.text = dataIntent.getStringExtra("ordenCompra")
+            
+            val oc = dataIntent.getStringExtra("ordenCompra") ?: ""
+            tvOrdenCompraValue.text = try {
+                oc.toDouble().toInt().toString()
+            } catch (e: Exception) {
+                oc
+            }
+
             tvUbicacionValue.setText(dataIntent.getStringExtra("ubicacion") ?: "", false)
             tvUbiDetalladaValue.setText(dataIntent.getStringExtra("ubiDetallada") ?: "", false)
             tvStockTotalValue.text = calcularStockTotal(codigoRecibido).toString()
@@ -141,7 +148,14 @@ class activity_mostrarDatos : AppCompatActivity() {
         tvCantidadValue.text = item.cantidad.toString()
         tvFechaIngresoValue.text = item.fechaIngreso
         tvFechaVencimientoValue.text = item.fechaVencimiento
-        tvOrdenCompraValue.text = item.ordenCompra
+        
+        // Asegurar que la Orden de Compra se vea como entero (sin .0)
+        tvOrdenCompraValue.text = try {
+            item.ordenCompra.toDouble().toInt().toString()
+        } catch (e: Exception) {
+            item.ordenCompra
+        }
+
         tvUbicacionValue.setText(item.ubicacion, false)
         tvUbiDetalladaValue.setText(item.ubicacionDetallada, false)
         tvStockTotalValue.text = calcularStockTotal(item.codigo).toString()

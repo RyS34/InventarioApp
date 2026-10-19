@@ -14,7 +14,7 @@
         android:layout_marginTop="60dp"
         android:gravity="center"
         android:text="@string/title_nuevo_ingreso"
-        android:textColor="?attr/colorOnSecondaryContainer"
+        android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +105,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
-                            android:inputType="text" />
+                            android:inputType="textMultiLine"
+                            android:maxLines="3"
+                            android:scrollbars="vertical" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
