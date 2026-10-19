@@ -76,7 +76,7 @@
     <string name="label_stock_total_summary">STOCK TOTAL</string>
     <string name="btn_ok">OK</string>
     <string name="btn_escanear">Escanear QR</string>
-    <string name="version_app">Version 2.0</string>
+    <string name="version_app">Version 2.1</string>
     <string name="info_footer">Optimiza tu gestión de almacén hoy.</string>
     <string name="desc_info_icon">Icono de información</string>
 </resources>
