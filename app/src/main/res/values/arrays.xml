@@ -4,6 +4,9 @@
         <item>UBICACION</item>
         <item>PATIO 1</item>
         <item>PATIO 2</item>
+        <item>PATIO 3</item>
+        <item>PATIO 4</item>
+
     </string-array>
 
     <string-array name="UbicacionDetallada">
@@ -17,6 +20,25 @@
         <item>F-1</item><item>F-2</item><item>F-3</item>
         <item>G-1</item><item>G-2</item><item>G-3</item>
         <item>H-1</item><item>H-2</item><item>H-3</item>
+        <item>I-1</item><item>I-2</item><item>I-3</item>
+        <item>J-1</item><item>J-2</item><item>J-3</item>
+        <item>K-1</item><item>K-2</item><item>K-3</item>
+        <item>L-1</item><item>L-2</item><item>L-3</item>
+        <item>M-1</item><item>M-2</item><item>M-3</item>
+        <item>N-1</item><item>N-2</item><item>N-3</item>
+        <item>O-1</item><item>O-2</item><item>O-3</item>
+        <item>P-1</item><item>P-2</item><item>P-3</item>
+        <item>Q-1</item><item>Q-2</item><item>Q-3</item>
+        <item>R-1</item><item>R-2</item><item>R-3</item>
+        <item>S-1</item><item>S-2</item><item>S-3</item>
+        <item>T-1</item><item>T-2</item><item>T-3</item>
+        <item>U-1</item><item>U-2</item><item>U-3</item>
+        <item>V-1</item><item>V-2</item><item>V-3</item>
+        <item>W-1</item><item>W-2</item><item>W-3</item>
+        <item>X-1</item><item>X-2</item><item>X-3</item>
+        <item>Y-1</item><item>Y-2</item><item>Y-3</item>
+        <item>Z-1</item><item>Z-2</item><item>Z-3</item>
+
 
     </string-array>
 </resources>

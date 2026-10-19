@@ -16,21 +16,34 @@ import com.tuempresa.inventario.model.StockItem
 
 class activity_mostrarDatos : AppCompatActivity() {
 
+    private lateinit var tvCodigoValue: TextView
+    private lateinit var tvDescripcionValue: TextView
+    private lateinit var tvLoteValue: MaterialAutoCompleteTextView
+    private lateinit var tvCantidadValue: TextView
+    private lateinit var tvFechaIngresoValue: TextView
+    private lateinit var tvFechaVencimientoValue: TextView
+    private lateinit var tvOrdenCompraValue: TextView
+    private lateinit var tvUbicacionValue: MaterialAutoCompleteTextView
+    private lateinit var tvUbiDetalladaValue: MaterialAutoCompleteTextView
+    private lateinit var tvStockTotalValue: TextView
+
+    private var fullStockList: List<StockItem> = emptyList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mostrar_datos)
 
         // Obtener referencias a los TextViews de valores
-        val tvCodigoValue = findViewById<TextView>(R.id.tvCodigoValue)
-        val tvDescripcionValue = findViewById<TextView>(R.id.tvDescripcionValue)
-        val tvLoteValue = findViewById<TextView>(R.id.tvLoteValue)
-        val tvCantidadValue = findViewById<TextView>(R.id.tvCantidadValue)
-        val tvFechaIngresoValue = findViewById<TextView>(R.id.tvFechaIngresoValue)
-        val tvFechaVencimientoValue = findViewById<TextView>(R.id.tvFechaVencimientoValue)
-        val tvOrdenCompraValue = findViewById<TextView>(R.id.tvOrdenCompraValue)
-        val tvUbicacionValue = findViewById<MaterialAutoCompleteTextView>(R.id.tvUbicacionValue)
-        val tvUbiDetalladaValue = findViewById<MaterialAutoCompleteTextView>(R.id.tvUbiDetalladaValue)
-        val tvStockTotalValue = findViewById<TextView>(R.id.tvStockTotalValue)
+        tvCodigoValue = findViewById(R.id.tvCodigoValue)
+        tvDescripcionValue = findViewById(R.id.tvDescripcionValue)
+        tvLoteValue = findViewById(R.id.tvLoteValue)
+        tvCantidadValue = findViewById(R.id.tvCantidadValue)
+        tvFechaIngresoValue = findViewById(R.id.tvFechaIngresoValue)
+        tvFechaVencimientoValue = findViewById(R.id.tvFechaVencimientoValue)
+        tvOrdenCompraValue = findViewById(R.id.tvOrdenCompraValue)
+        tvUbicacionValue = findViewById(R.id.tvUbicacionValue)
+        tvUbiDetalladaValue = findViewById(R.id.tvUbiDetalladaValue)
+        tvStockTotalValue = findViewById(R.id.tvStockTotalValue)
 
         // Obtener los botones
         val btnOk = findViewById<Button>(R.id.buttonOk)
@@ -40,60 +53,60 @@ class activity_mostrarDatos : AppCompatActivity() {
         // Obtener los datos del Intent
         val dataIntent = intent
         val readOnly = dataIntent.getBooleanExtra("readOnly", false)
+        val codigoRecibido = dataIntent.getStringExtra("codigo") ?: ""
+        val loteRecibido = dataIntent.getStringExtra("lote") ?: ""
 
-        val codigo = dataIntent.getStringExtra("codigo")
-        val descripcion = dataIntent.getStringExtra("descripcion")
-        val lote = dataIntent.getStringExtra("lote")
-        val cantidad = dataIntent.getStringExtra("cantidad")
-        val fechaIngreso = dataIntent.getStringExtra("fechaIngreso")
-        val fechaVencimiento = dataIntent.getStringExtra("fechaVencimiento")
-        val ordenCompra = dataIntent.getStringExtra("ordenCompra")
-        val ubicacion = dataIntent.getStringExtra("ubicacion")
-        val ubiDetallada = dataIntent.getStringExtra("ubiDetallada")
+        // Cargar lista completa para permitir cambio de lote
+        cargarStockCompleto()
 
-        // Mostrar los datos en los TextViews de valores
-        tvCodigoValue.text = codigo
-        tvDescripcionValue.text = descripcion
-        tvLoteValue.text = lote
-        tvCantidadValue.text = cantidad
-        tvFechaIngresoValue.text = fechaIngreso
-        tvFechaVencimientoValue.text = fechaVencimiento
-        tvOrdenCompraValue.text = ordenCompra
-        
-        // Configurar adaptadores para las ubicaciones SIEMPRE
+        // Configurar adaptadores para las ubicaciones
         val ubicaciones = resources.getStringArray(R.array.Ubicacion)
         val ubicacionesDetalladas = resources.getStringArray(R.array.UbicacionDetallada)
-        
         val adapterUbi = ArrayAdapter(this, R.layout.spinner_item, ubicaciones)
         val adapterDet = ArrayAdapter(this, R.layout.spinner_item, ubicacionesDetalladas)
-        
         tvUbicacionValue.setAdapter(adapterUbi)
         tvUbiDetalladaValue.setAdapter(adapterDet)
 
-        // Forzar el despliegue al hacer clic
+        // Configurar Dropdown de Lotes
+        val lotesDisponibles = fullStockList.filter { it.codigo == codigoRecibido }.map { it.lote }
+        val adapterLote = ArrayAdapter(this, R.layout.spinner_item, lotesDisponibles)
+        tvLoteValue.setAdapter(adapterLote)
+
+        // Listener para cambio de lote
+        tvLoteValue.setOnItemClickListener { parent, _, position, _ ->
+            val loteSeleccionado = parent.getItemAtPosition(position).toString()
+            val item = fullStockList.find { it.codigo == codigoRecibido && it.lote == loteSeleccionado }
+            item?.let { actualizarInterfazConItem(it) }
+        }
+
+        // Mostrar datos iniciales
+        val itemInicial = fullStockList.find { it.codigo == codigoRecibido && it.lote == loteRecibido }
+        if (itemInicial != null) {
+            actualizarInterfazConItem(itemInicial)
+        } else {
+            // Fallback si no se encuentra (usar datos del intent)
+            tvCodigoValue.text = codigoRecibido
+            tvLoteValue.setText(loteRecibido, false)
+            tvDescripcionValue.text = dataIntent.getStringExtra("descripcion")
+            tvCantidadValue.text = dataIntent.getStringExtra("cantidad")
+            tvFechaIngresoValue.text = dataIntent.getStringExtra("fechaIngreso")
+            tvFechaVencimientoValue.text = dataIntent.getStringExtra("fechaVencimiento")
+            tvOrdenCompraValue.text = dataIntent.getStringExtra("ordenCompra")
+            tvUbicacionValue.setText(dataIntent.getStringExtra("ubicacion") ?: "", false)
+            tvUbiDetalladaValue.setText(dataIntent.getStringExtra("ubiDetallada") ?: "", false)
+            tvStockTotalValue.text = calcularStockTotal(codigoRecibido).toString()
+        }
+
+        tvLoteValue.setOnClickListener { tvLoteValue.showDropDown() }
         tvUbicacionValue.setOnClickListener { tvUbicacionValue.showDropDown() }
         tvUbiDetalladaValue.setOnClickListener { tvUbiDetalladaValue.showDropDown() }
 
-        // Cargar los valores actuales sin filtrar la lista
-        tvUbicacionValue.setText(ubicacion ?: "", false)
-        tvUbiDetalladaValue.setText(ubiDetallada ?: "", false)
-
         if (readOnly) {
-            // En modo lectura ocultamos el botón de modificar pero dejamos que se vea la ubicación
             btnEditar.visibility = View.GONE
         }
 
-        btnBack.setOnClickListener {
-            finish()
-        }
+        btnBack.setOnClickListener { finish() }
 
-        // Calcular y mostrar Stock Total
-        if (codigo != null) {
-            val stockTotal = calcularStockTotal(codigo)
-            tvStockTotalValue.text = stockTotal.toString()
-        }
-
-        // Configurar el listener del botón OK
         btnOk.setOnClickListener {
             val resultIntent = Intent().apply {
                 putExtra("ubicacion", tvUbicacionValue.text.toString())
@@ -105,24 +118,36 @@ class activity_mostrarDatos : AppCompatActivity() {
             finish() 
         }
 
-        // Configurar el listener del botón Modificar
         btnEditar.setOnClickListener {
             setResult(RESULT_CANCELED)
             finish()
         }
     }
 
-    private fun calcularStockTotal(codigo: String): Int {
+    private fun cargarStockCompleto() {
         val sharedPreferences = getSharedPreferences("StockData", MODE_PRIVATE)
         val stockListJson = sharedPreferences.getString("stockList", null)
         if (stockListJson != null) {
             val gson = Gson()
             val type = object : TypeToken<MutableList<StockItem>>() {}.type
-            val stockList: List<StockItem> = gson.fromJson(stockListJson, type)
-
-            // Sumar cantidades de todos los items que tengan el mismo código
-            return stockList.filter { it.codigo == codigo }.sumOf { it.cantidad }
+            fullStockList = gson.fromJson(stockListJson, type) ?: emptyList()
         }
-        return 0
+    }
+
+    private fun actualizarInterfazConItem(item: StockItem) {
+        tvCodigoValue.text = item.codigo
+        tvDescripcionValue.text = item.descripcion
+        tvLoteValue.setText(item.lote, false)
+        tvCantidadValue.text = item.cantidad.toString()
+        tvFechaIngresoValue.text = item.fechaIngreso
+        tvFechaVencimientoValue.text = item.fechaVencimiento
+        tvOrdenCompraValue.text = item.ordenCompra
+        tvUbicacionValue.setText(item.ubicacion, false)
+        tvUbiDetalladaValue.setText(item.ubicacionDetallada, false)
+        tvStockTotalValue.text = calcularStockTotal(item.codigo).toString()
+    }
+
+    private fun calcularStockTotal(codigo: String): Int {
+        return fullStockList.filter { it.codigo == codigo }.sumOf { it.cantidad }
     }
 }

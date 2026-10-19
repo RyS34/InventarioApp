@@ -58,7 +58,7 @@
     <string name="header_orden_compra">O.C.</string>
     <string name="header_ubicacion">UBICACIÓN</string>
     <string name="header_ubi_detallada">UBI. DETALLADA.</string>
-    <string name="btn_exportar_importar">Exportar</string>
+    <string name="btn_exportar_importar">Importar datos</string>
     <string name="btn_actualizar">ACTUALIZAR</string>
     <string name="btn_volver">Volver</string>
 

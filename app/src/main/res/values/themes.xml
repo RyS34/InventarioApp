@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Tema Base Moderno -->
-    <style name="Theme.InventarioApp" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="Theme.InventarioApp" parent="Theme.Material3.Light.NoActionBar">
         <!-- Colores Principales -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/white</item>
